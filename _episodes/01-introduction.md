@@ -1,11 +1,15 @@
 ---
 title: "Introduction"
-teaching: 0
-exercises: 0
+teaching: 10
+exercises: 10
 questions:
-- "Key question"
+- "What is CUDA?"
+- "How to compile?"
+- "How to mointor the graphics card?"
 objectives:
-- "First objective."
+- "To be able to compile CUDA code"
+- "To see the activity on your graphics card"
 keypoints:
-- "First key point."
+- "CUDA capabilities vary by card"
+- "Also varies by version of CUDA tools"
 ---
