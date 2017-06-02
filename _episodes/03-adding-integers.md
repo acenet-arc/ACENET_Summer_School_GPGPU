@@ -88,6 +88,7 @@ When you are ready to copy results back to the main CPU memory, you use the same
 > >   printf("%d plus %d equals %d\n", a, b, c);
 > >   cudaFree(d_a); cudaFree(d_b); cudaFree(d_c);
 > > }
+> > ~~~
 > > {: .source}
 > {: .solution}
 {: .challenge}
