@@ -4,30 +4,18 @@ title: Setup
 permalink: /setup/
 ---
 
-To get access to one of the graphics machines, you will need to connect to the mahone cluster first.
+This lesson will be carried out on the Graham cluster.
 
 ~~~
-ssh username@mahone.ace-net.ca
-~~~
-{: .bash}
-
-From there, you will need to connect to one of the graphics machines.
-
-~~~
-ssh clg01.smu.acenet.ca
-OR
-ssh clg02.smu.acenet.ca
-OR
-ssh clg03.smu.acenet.ca
+ssh username@graham.computecanada.ca
 ~~~
 {: .bash}
 
-To set up your environment correctly, you will need to run the following commands first.
+To set up your environment, load the appropriate module with:
 
 ~~~
 module purge
-
-module load gcc cuda
+module load cuda
 ~~~
 {: .bash}
 
