@@ -10,8 +10,10 @@ objectives:
 - "To be able to compile CUDA code"
 - "To see the activity on your graphics card"
 keypoints:
-- "CUDA capabilities vary by card"
-- "Also varies by version of CUDA tools"
+- "A GPU (Graphics Processing Unit) can only do a small selection of computing tasks, but do them very quickly"
+- "GPGPU means General-purpose computing on graphics processing units"
+- "CUDA is one of several programming interfaces for GPGPU"
+- "The CUDA C compiler is 'nvcc'"
 ---
 
 So what is CUDA. CUDA stands for Compute Unified Device Architecture. CUDA is a complete framework for working with graphics cards to do parallel programming. The first part is a driver that actually handles communications with the card. The second part is a set of libraries that allow your code to interact with the driver portion. This is all handled through a package available from Nvidia. CUDA also only works with Nvidia graphics cards.
