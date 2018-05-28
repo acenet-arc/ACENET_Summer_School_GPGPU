@@ -35,14 +35,14 @@ As you can see, we don't hand in the actual integers to be added, but pointers t
 > a = (int *)malloc(sizeof(int));
 > ~~~
 > {: .source}
-> In this case, since you explicitly asked for enough memory to store an integer, you are responsible for giving it back again when you are done with the free function.
+> If you use malloc() or any of its cousins to allocate memory, you are responsible for giving it back again when you are done with the free() function.
 > ~~~
 > free(a);
 > ~~~
 > {: .source}
 {: .callout}
 
-Since we are dealing with two physical devices (the host CPU and the GPU) we need to work with dynamically allocated memory for data. There are CUDA variants for malloc and free that are used to talk to the GPU and handle memory allocation. These functions actually deal with pointers to pointers, so it would look like the following.
+Since we are dealing with two physical devices (the host CPU and the GPU) we need to work with dynamically allocated memory for data. There are CUDA variants for malloc and free that are used to talk to the GPU and handle memory allocation. These functions actually deal with pointers to pointers, so it looks like the following:
 
 ~~~
 int *d_a;
@@ -50,7 +50,7 @@ cudaMalloc((void **)&d_a, sizeof(int));
 ~~~
 {: .source}
 
-You then need to copy local data from the CPU memory to the GPU memory with another function from the CUDA library. This would look like
+You then need to copy data from the CPU memory to the GPU memory with another function from the CUDA library. This looks like:
 
 ~~~
 int a = 7;
@@ -60,10 +60,16 @@ cudaMemcpy(d_a, &a, sizeof(int), cudaMemcpyHostToDevice);
 ~~~
 {: .source}
 
-When you are ready to copy results back to the main CPU memory, you use the same memory copying function, but with the last parameter changed to 'cudaMemcpyDeviceToHost'.
+When you are ready to copy results back to the main CPU memory, you use the same memory copying function, but with the last parameter changed to 'cudaMemcpyDeviceToHost'. 
 
 > ## Adding two integers
 > How can you get your GPU card to add two integers?
+>
+> Useful manual pages:
+> cudaMemcpy: https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__MEMORY.html#group__CUDART__MEMORY_1gc263dbe6574220cc776b45438fc351e8
+> cudaMalloc: https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__MEMORY.html#group__CUDART__MEMORY_1g37d37965bfb4803b6d4e59ff26856356
+> cudaFree: https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__MEMORY.html#group__CUDART__MEMORY_1ga042655cbbf3408f01061652a075e094
+>
 > > ## Solution
 > > ~~~
 > > #include <stdio.h>
