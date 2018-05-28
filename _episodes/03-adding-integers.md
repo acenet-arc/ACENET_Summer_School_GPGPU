@@ -3,13 +3,13 @@ title: "Adding Two Integers"
 teaching: 20
 exercises: 20
 questions:
-- "How to send work to a GPU"
+- "How is data communicated between CPU and GPU?"
+- "How is memory handled?"
 objectives:
-- "To be able to send data and functions to a GPU"
-- "To run your code on a GPU and pull results off a GPU"
+- "To send data from CPU to GPU and back"
 keypoints:
 - "Separate memory exists on the GPU and the host machine"
-- "This requires explicit copying of data to/from the GPU"
+- "This requires explicit copying of data to and from the GPU"
 ---
 
 In this section, we will build up a code that can add two numbers. The first item is to write a kernel function that can take two integers and return the sum.
