@@ -46,13 +46,13 @@ int main(int argc, char **argv) {
 ~~~
 {: .source}
 
-You can compile this code with the exact same command as before. We added two extra parts to the program. The first part, '__global__', tells the compiler that this function will be something that runs on the GPU, but is called from the main program. The second part is the use of angle brackets added to the function call. This is extra syntax used to tell the compiler that this function is to be used as a kernel and to launch it on the GPU. In this case, our kernel function doesn't do anything. We will be adding more to it in the next section.
+You can compile this code with the same command as before, except the file extension must be '.cu' instead of '.c'. We added two extra parts to the program. The first part, <pre>__global__</pre>, tells the compiler that this function will be something that runs on the GPU, but is called from the main program. The second part is the use of angle brackets added to the function call. This is extra syntax used to tell the compiler that this function is to be used as a kernel and to launch it on the GPU. In this case, our kernel function doesn't do anything. We will be adding more to it in the next section.
 
 The point of using a GPU is to do massively parallel programs. The two numbers within the angle brackets define how the work is to be divided up among the threads available. The first number defines the number of blocks to break the work up across. These blocks run in parallel. The second number defines the number threads that will work within each of the blocks. So if you have the following, in general,
 
 ~~~
-mykernel<<M,N>>();
+mykernel<<<M,N>>>();
 ~~~
 {: .source}
 
-this sets up your work so that everything is divided into M blocks, with each block having N threads. Since both parameters provide ways of parallelizing your work, you may ask why is there two? Threads not only handle parallelism, but also provide ways of communicating and synchronizing between the threads. This gives you the tools you need to handle more complex algorithms.
+this sets up your work so that everything is divided into M blocks, with each block having N threads. Since both parameters provide ways of parallelizing your work, you may ask why are there two? Threads not only handle parallelism, but also provide ways of communicating and synchronizing between the threads. This gives you the tools you need to handle more complex algorithms.
