@@ -3,12 +3,12 @@ title: "Adding vectors with a GPU using threads"
 teaching: 20
 exercises: 20
 questions:
-- "How to parallelize code with a GPU"
+- "What is the difference between blocks and threads?"
 objectives:
 - "To be able to divide work amongst multiple threads"
-- "To run your code on a graphics code"
 keypoints:
 - "You can use threads to break your work up for parallel runs on a GPU"
+- "Threads can share memory, and synchronize with one another"
 ---
 
 Now that we have actual work being done by the GPU, we need to move on to getting it to do much larger amounts of work. We will handle this by breaking the data up across multiple threads to be handled in parallel. You can create M threads by changing the second parameter in the angled brackets of the function call to M.
