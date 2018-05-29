@@ -10,7 +10,14 @@ keypoints:
 - "Use blocks to break your work up for parallel calculation on a GPU"
 ---
 
-Now that we have actual work being done by the GPU, let's move on to getting it to do much larger amounts of work. Let's generalize the code we just wrote to add two _vectors_ of integers, instead of two integers. We'll define a function `random_ints(a, K)` to populate some arrays with random integers:
+Now that we have actual work being done by the GPU, let's move on to getting it to do much larger amounts of work. Let's generalize the code we just wrote to add two _vectors_ of integers, instead of two integers. Instead of having statically defined variables to hold single integers, call `malloc` to create larger memory spaces to store the vectors. 
+
+~~~
+a = (int *)malloc(size); 
+~~~
+{: .source}
+
+We'll define a function `random_ints(a, K)` to populate some arrays with random integers:
 
 ~~~
 void random_ints(int* a, int K) {
@@ -19,7 +26,6 @@ void random_ints(int* a, int K) {
       a[i] = rand() %100;
 }
 
-a = (int *)malloc(size); 
 random_ints(a, K);
 ~~~
 {: .source}
@@ -35,11 +41,10 @@ __global__ void add(int *a, int *b, int *c) {
 ~~~
 {: .source}
 
-Instead of having statically defined variables to hold single integers, call `malloc` to create larger memory spaces to store entire arrays of integers. 
-
 > ## Putting it all together
 > Combine the pieces described above with your code from the previous exercise to add two vectors on the GPU.
 > You can just print the first and last results.
+> 
 > > ## Solution
 > > ~~~
 > > #include <stdio.h>
@@ -72,6 +77,9 @@ Instead of having statically defined variables to hold single integers, call `ma
 > >    add<<<N,1>>>(d_a, d_b, d_c);
 > >    cudaMemcpy(c, d_c, size, cudaMemcpyDeviceToHost);
 > >    cudaFree(d_a); cudaFree(d_b); cudaFree(d_c);
+> >    printf("%d + %d = %d\n", a[0],   b[0],   c[0]);
+> >    printf("...\n");
+> >    printf("%d + %d = %d\n", a[N-1], b[N-1], c[N-1]);
 > >    free(a); free(b); free(c);
 > > }
 > > ~~~
