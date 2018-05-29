@@ -3,17 +3,30 @@ title: "Adding vectors with a GPU"
 teaching: 20
 exercises: 20
 questions:
-- "How to parallelize code with a GPU"
+- "How to parallelize code with CUDA"
 objectives:
 - "To be able to divide work amongst multiple blocks"
-- "To run your code on a graphics code"
 keypoints:
-- "You need to use blocks to break your work up for parallel runs on a GPU"
+- "Use blocks to break your work up for parallel calculation on a GPU"
 ---
 
-Now that we have actual work being done by the GPU, we need to move on to getting it to do much larger amounts of work. We will handle this by breaking the data up into multiple blocks to be handled in parallel. You can create N blocks by changing the first parameter in the angled brackets of the function call to N.
+Now that we have actual work being done by the GPU, let's move on to getting it to do much larger amounts of work. Let's generalize the code we just wrote to add two _vectors_ of integers, instead of two integers. We'll define a function `random_ints(a, K)` to populate some arrays with random integers:
 
-You also need to change the kernel function, since it will be getting some block of the total data. You need to ask the CUDA library for individual elements using some kind of indexing scheme. This changes the function definition to be the following.
+~~~
+void random_ints(int* a, int K) {
+   /* generate K random integers between 0-100 */
+   for (int i = 0; i < K; ++i)
+      a[i] = rand() %100;
+}
+
+a = (int *)malloc(size); 
+random_ints(a, K);
+~~~
+{: .source}
+
+To do the addition on the GPU, in parallel, we break the data up into multiple blocks. We can create N blocks by changing the first parameter in the angled brackets of the kernel function call.
+
+We also need to change the kernel function, since it will now have to deal with a block of data, rather than single integers. The CUDA library provides several variables for indexing; we'll use `blockIdx.x`. This changes the kernel function definition to the following:
 
 ~~~
 __global__ void add(int *a, int *b, int *c) {
@@ -22,20 +35,22 @@ __global__ void add(int *a, int *b, int *c) {
 ~~~
 {: .source}
 
-Instead of having statically defined variables to hold single integers, you need to use calls to malloc to create larger memory spaces to store entire arrays of integers. To give us data to work with, we will use the function 'random_ints(a, N)' in order to populate these arrays with N randome integers. This would look like
-
-~~~
-a = (int *)malloc(size); random_int(a, N);
-~~~
-{: .source}
+Instead of having statically defined variables to hold single integers, call `malloc` to create larger memory spaces to store entire arrays of integers. 
 
 > ## Putting it all together
-> What happens when you put this all together?
+> Combine the pieces described above with your code from the previous exercise to add two vectors on the GPU.
+> You can just print the first and last results.
 > > ## Solution
 > > ~~~
 > > #include <stdio.h>
 > > #include <stdlib.h>
 > > #include <cuda.h>
+> > 
+> > void random_ints(int* a, int K) {
+> >    /* generate K random integers between 0-100 */
+> >    for (int i = 0; i < K; ++i)
+> >       a[i] = rand() %100;
+> > }
 > > 
 > > __global__ void add(int *a, int *b, int *c) {
 > >    c[blockIdx.x] = a[blockIdx.x] + b[blockIdx.x];
