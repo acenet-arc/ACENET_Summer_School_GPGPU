@@ -11,9 +11,11 @@ keypoints:
 - "Threads can share memory, and synchronize with one another"
 ---
 
-Now that we have actual work being done by the GPU, we need to move on to getting it to do much larger amounts of work. We will handle this by breaking the data up across multiple threads to be handled in parallel. You can create M threads by changing the second parameter in the angled brackets of the function call to M.
+In the Hello World example we saw the `<<<M,N>>>` syntax used in CUDA to call a kernel function, and learned that it creates M blocks and N threads per block. In the Adding Vectors example we just finished, we used creates multiple blocks with `<<<N,1>>>`. Now we will use the second parameter to create threads instead.
 
-You also need to change the kernel function, since it will be running in a number of threads. You need to ask the CUDA library for individual elements using some kind of indexing scheme. This changes the function definition to be the following.
+What is the difference? A GPU typically has several (2, or 4, or 6...) _streaming multiprocessors_ (SMs). A block is handled by one SM, but each SM can support many threads --- typically in multiples of 32. See the <a href="">CUDA C Programming Guide</a> for pictures. Threads can easily access and share the data within a block.
+
+We need to change the kernel function to use CUDA's thread index, `threadIdx.x`. This changes the function definition to be the following:
 
 ~~~
 __global__ void add(int *a, int *b, int *c) {
@@ -22,15 +24,11 @@ __global__ void add(int *a, int *b, int *c) {
 ~~~
 {: .source}
 
-Instead of having statically defined variables to hold single integers, you need to use calls to malloc to create larger memory spaces to store entire arrays of integers. To give us data to work with, we will use the function 'random_ints(a, M)' in order to populate these arrays with M random integers. This would look like
-
-~~~
-a = (int *)malloc(size); random_int(a, M);
-~~~
-{: .source}
-
 > ## Putting it all together
-> What happens when you put this all together?
+> Copy the Adding Vectors example you just finished, and change the copy to use threads instead of blocks.
+> Verify that it still produces correct results.
+> Use `nvprof` to compare the performance of the two solutions.
+> 
 > > ## Solution
 > > ~~~
 > > #include <stdio.h>
