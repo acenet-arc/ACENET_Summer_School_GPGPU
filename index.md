@@ -6,7 +6,7 @@ This workshop presents an introduction to using CUDA to harness the power of an 
 
 > ## Prerequisites
 >
-> - An ACENET account
+> - A Compute Canada account
 > - Basic C knowledge
 > - Basic Linux command line competence
 {: .prereq}
