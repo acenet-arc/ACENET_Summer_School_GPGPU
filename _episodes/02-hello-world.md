@@ -3,15 +3,17 @@ title: "Hello World"
 teaching: 20
 exercises: 20
 questions:
-- "How to compile a Hello World"
+- "How to run Hello World"
 objectives:
 - "To be able to compile CUDA code"
-- "To run your code on a graphics code"
+- "To run your code on a graphics node"
 keypoints:
-- "You need to use nvcc to compile code"
+- "Use nvcc to compile"
+- "CUDA source files are suffixed .cu"
+- "Use srun to execute a test on a GPU node"
 ---
 
-The regular hello world program is as below:
+The traditional C-language Hello World program is:
 
 ~~~
 #include <stdio.h>
@@ -23,14 +25,14 @@ int main(int argc, char **argv) {
 ~~~
 {: .source}
 
-The CUDA compiler not only generates executable card for the GPU, but also generates binary code that can run on a regular CPU. So, you can use it to compile this regular hello world example with the following command.
+The CUDA compiler can generate binary code that will run on CPUs as well as code that will run on GPUs. So, you can use it to compile this Hello World with the following command:
 
 ~~~
 nvcc -o hello_world hello_world.c
 ~~~
 {: .bash}
 
-To get this to run with a GPU, you need to add some code to create and launch a kernel. A kernel is a portion of code that is compiled as a unit that can be transfered to the GPU and started running on it. A simple example would look like the following.
+To get this to run with a GPU, you need to add some code to create and launch a kernel. A kernel is a portion of code that can be transfered to the GPU and run there. A simple example would look like the following.
 
 ~~~
 #include <stdio.h>
@@ -56,3 +58,31 @@ mykernel<<<M,N>>>();
 {: .source}
 
 this sets up your work so that everything is divided into M blocks, with each block having N threads. Since both parameters provide ways of parallelizing your work, you may ask why are there two? Threads not only handle parallelism, but also provide ways of communicating and synchronizing between the threads. This gives you the tools you need to handle more complex algorithms.
+
+## Running on a GPU node
+
+You can execute `hello_world` on the login node simply by naming it:
+
+~~~
+$ ./hello_world
+Hello World
+~~~
+{: .source}
+
+But the login nodes on the cluster we're using don't have GPUs. You can execute a quick test program by asking for an 
+<a href="https://docs.computecanada.ca/wiki/Running_jobs#Interactive_jobs">interactive job</a> from the scheduler:
+
+~~~
+$ srun --account=acenet-ss --reservation=acenet-ss_gpu --gres=gpu:1 --cpus-per-task=6 --time=5 ./hello_world
+Hello World
+~~~
+{: .source}
+
+This is obviously a lot to type each time you want to run a simple test. You can use the shell `alias` command to save it:
+
+~~~
+$ alias testgpu='srun --account=acenet-ss --reservation=acenet-ss_gpu --gres=gpu:1 --cpus-per-task=6 --time=5'
+$ testgpu ./hello_world
+Hello World
+~~~
+{: .source}
