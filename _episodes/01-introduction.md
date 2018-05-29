@@ -6,12 +6,10 @@ questions:
 - "What is a GPU, and why do we use them?"
 - "What is CUDA?"
 - "How do you compile with CUDA?"
-- "How can you monitor the graphics card?"
 objectives:
 - "To be able to compile CUDA code"
-- "To see the activity on your graphics card"
 keypoints:
-- "A GPU (Graphics Processing Unit) can only do a few different computing tasks, but can do them very quickly"
+- "A GPU (Graphics Processing Unit) is best at data-parallel, arithmetic-intense calculations"
 - "GPGPU means General-purpose computing on graphics processing units"
 - "CUDA is one of several programming interfaces for GPGPU"
 - "The CUDA C compiler is 'nvcc'"
