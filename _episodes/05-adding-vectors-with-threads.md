@@ -36,6 +36,12 @@ a = (int *)malloc(size); random_int(a, M);
 > > #include <stdio.h>
 > > #include <stdlib.h>
 > > #include <cuda.h>
+> >
+> > void random_ints(int* a, int K) {
+> >    /* generate K random integers between 0-100 */
+> >    for (int i = 0; i < K; ++i)
+> >       a[i] = rand() %100;
+> > }
 > > 
 > > __global__ void add(int *a, int *b, int *c) {
 > >    c[threadIdx.x] = a[threadIdx.x] + b[threadIdx.x];
@@ -57,6 +63,9 @@ a = (int *)malloc(size); random_int(a, M);
 > >    add<<<1,M>>>(d_a, d_b, d_c);
 > >    cudaMemcpy(c, d_c, size, cudaMemcpyDeviceToHost);
 > >    cudaFree(d_a); cudaFree(d_b); cudaFree(d_c);
+> >    printf("%d + %d = %d\n", a[0],   b[0],   c[0]);
+> >    printf("...\n");
+> >    printf("%d + %d = %d\n", a[M-1], b[M-1], c[M-1]);
 > >    free(a); free(b); free(c);
 > > }
 > > ~~~
