@@ -23,7 +23,7 @@ A Graphics Processing Unit is a specialized piece of computer circuitry designed
 GPUs are key to the performance of many current computer games; a machine with only CPUs cannot update the picture on the screen fast enough to make the game playable.
 
 A GPU is effectively a small, highly specialized, parallel computer. 
-The programmer specifies a small set of operations called the *kernel*, and those operations are applied to a large number of data elements.
+"The GPU is especially well-suited to address problems that can be expressed as data-parallel computations - the same program is executed on many data elements in parallel - with high arithmetic intensity - the ratio of arithmetic operations to memory operations." (<a href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html">CUDA C Programming Guide</a>)
 
 ## What is CUDA?
 
