@@ -6,9 +6,11 @@ questions:
 - "What is the difference between blocks and threads?"
 objectives:
 - "To be able to divide work amongst multiple threads"
+- "To use a profiler to examine performance"
 keypoints:
 - "You can use threads to break your work up for parallel runs on a GPU"
 - "Threads can share memory, and synchronize with one another"
+- "nvprof measures performance of CUDA GPU routines"
 ---
 
 In the Hello World example we saw the `<<<M,N>>>` syntax used in CUDA to call a kernel function, and learned that it creates M blocks and N threads per block. In the Adding Vectors example we just finished, we used creates multiple blocks with `<<<N,1>>>`. Now we will use the second parameter to create threads instead.
