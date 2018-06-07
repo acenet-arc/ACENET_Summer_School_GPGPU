@@ -1,6 +1,6 @@
 ---
 title: "Adding Two Integers"
-teaching: 20
+teaching: 10
 exercises: 20
 questions:
 - "How is data communicated between CPU and GPU?"

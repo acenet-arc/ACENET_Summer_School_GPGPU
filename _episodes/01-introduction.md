@@ -1,7 +1,7 @@
 ---
 title: "Introduction"
 teaching: 10
-exercises: 10
+exercises: 5
 questions:
 - "What is a GPU, and why do we use them?"
 - "What is CUDA?"

@@ -1,7 +1,7 @@
 ---
 title: "Adding vectors with a GPU"
-teaching: 20
-exercises: 20
+teaching: 15
+exercises: 25
 questions:
 - "How to parallelize code with CUDA"
 objectives:
@@ -10,14 +10,23 @@ keypoints:
 - "Use blocks to break your work up for parallel calculation on a GPU"
 ---
 
-Now that we have actual work being done by the GPU, let's move on to getting it to do much larger amounts of work. Let's generalize the code we just wrote to add two _vectors_ of integers, instead of two integers. Instead of having statically defined variables to hold single integers, call `malloc` to create larger memory spaces to store the vectors. 
+A GPU is not meant for doing one thing at a time; it's meant for doing
+arithmetic on massive amounts of data all at the same time. It's time we scaled
+up what we're doing.
+
+Let's generalize the code we just wrote to add two _vectors_ of integers,
+instead of two integers. Instead of having statically defined variables to hold
+single integers, call `malloc` to create larger (CPU) memory spaces to store
+the vectors.
 
 ~~~
 a = (int *)malloc(size); 
 ~~~
 {: .source}
 
-We'll define a function `random_ints(a, K)` to populate some arrays with random integers:
+We'll define a function `random_ints(a, K)` to populate some arrays with random
+integers. (For now, just call this from the CPU. We'll just do addition on the
+GPU this morning.)
 
 ~~~
 void random_ints(int* a, int K) {
@@ -30,9 +39,14 @@ random_ints(a, K);
 ~~~
 {: .source}
 
-To do the addition on the GPU, in parallel, we break the data up into multiple blocks. We can create N blocks by changing the first parameter in the angled brackets of the kernel function call.
+To do the addition on the GPU, in parallel, we break the data up into multiple
+blocks. We can create N blocks by changing the first parameter in the angled
+brackets of the kernel function call.
 
-We also need to change the kernel function, since it will now have to deal with a block of data, rather than single integers. The CUDA library provides several variables for indexing; we'll use `blockIdx.x`. This changes the kernel function definition to the following:
+We also need to change the kernel function to deal with blocks of data rather
+than single integers. The CUDA library provides several variables for indexing;
+we'll use `blockIdx.x`. This changes the kernel function definition to the
+following:
 
 ~~~
 __global__ void add(int *a, int *b, int *c) {
@@ -42,9 +56,15 @@ __global__ void add(int *a, int *b, int *c) {
 {: .source}
 
 > ## Putting it all together
-> Combine the pieces described above with your code from the previous exercise to add two vectors on the GPU.
-> You can just print the first and last results.
-> 
+>
+> Combine the pieces described above with your code from the previous exercise
+> to add two vectors on the GPU.  You can just print the first and last results.
+> Make the size of the arrays 512. You can make the size larger if you want to
+> experiment once it's working.
+>
+> If you're not accustomed to C programming and you're confused by `malloc`,
+> double up with another student who is familiar with C. They'll help you.
+>
 > > ## Solution
 > > ~~~
 > > #include <stdio.h>

@@ -1,7 +1,7 @@
 ---
 title: "Hello World"
-teaching: 20
-exercises: 20
+teaching: 15
+exercises: 5
 questions:
 - "How to compile and run Hello World"
 objectives:
