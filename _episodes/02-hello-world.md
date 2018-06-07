@@ -3,10 +3,9 @@ title: "Hello World"
 teaching: 20
 exercises: 20
 questions:
-- "How to run Hello World"
+- "How to compile and run Hello World"
 objectives:
 - "To be able to compile CUDA code"
-- "To run your code on a graphics node"
 keypoints:
 - "Use nvcc to compile"
 - "CUDA source files are suffixed .cu"
@@ -25,7 +24,7 @@ int main(int argc, char **argv) {
 ~~~
 {: .source}
 
-The CUDA compiler can generate binary code that will run on CPUs as well as code that will run on GPUs. So, you can use it to compile this Hello World with the following command:
+The CUDA compiler is a C compiler that can generate binary code that will run on CPUs as well as code that will run on GPUs. The compiler is called `nvcc`. Use it to compile this Hello World with the following command:
 
 ~~~
 nvcc -o hello_world hello_world.c
@@ -69,8 +68,8 @@ Hello World
 ~~~
 {: .source}
 
-But the login nodes on the cluster we're using don't have GPUs. You can execute a quick test program by asking for an 
-<a href="https://docs.computecanada.ca/wiki/Running_jobs#Interactive_jobs">interactive job</a> from the scheduler:
+But the login nodes on the cluster we're using don't have GPUs.  To run it on a
+GPU node, use one of the Slurm commands we showed in the previous episode:
 
 ~~~
 $ srun --account=acenet-ss --reservation=acenet-ss_gpu --gres=gpu:1 --cpus-per-task=6 --time=5 ./hello_world
@@ -78,11 +77,10 @@ Hello World
 ~~~
 {: .source}
 
-This is obviously a lot to type each time you want to run a simple test. You can use the shell `alias` command to save it:
+Or if you ran the `alias` command from the last episode:
 
 ~~~
-$ alias testgpu='srun --account=acenet-ss --reservation=acenet-ss_gpu --gres=gpu:1 --cpus-per-task=6 --time=5'
 $ testgpu ./hello_world
-Hello World
 ~~~
 {: .source}
+
