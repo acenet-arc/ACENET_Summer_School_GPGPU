@@ -13,11 +13,25 @@ keypoints:
 - "nvprof measures performance of CUDA GPU routines"
 ---
 
-In the Hello World example we saw the `<<<M,N>>>` syntax used in CUDA to call a kernel function, and learned that it creates M blocks and N threads per block. In the Adding Vectors example we just finished, we used creates multiple blocks with `<<<N,1>>>`. Now we will use the second parameter to create threads instead.
+In the Hello World example we saw the `<<<M,N>>>` syntax used in CUDA to call a
+kernel function, and learned that it creates M blocks and N threads per block.
+In the Adding Vectors example we just finished, we used creates multiple blocks
+with `<<<N,1>>>`. Now we will use the second parameter to create threads
+instead.
 
-What is the difference? A GPU typically has several (2, or 4, or 6...) _streaming multiprocessors_ (SMs). A block is handled by one SM, but each SM can support many threads --- typically in multiples of 32. See the <a href="">CUDA C Programming Guide</a> for pictures. Threads can easily access and share the data within a block.
+What is the difference? A GPU typically has several (2, or 4, or 6...)
+_streaming multiprocessors_ (SMs). A block is handled by one SM, though each
+SM may handle many blocks in succession.  And each SM supports many threads---
+typically in multiples of 32. See the <a href="">CUDA C Programming Guide</a>
+for pictures (e.g. Fig 7).  Threads can easily access and share the data within
+a block.
 
-We need to change the kernel function to use CUDA's thread index, `threadIdx.x`. This changes the function definition to be the following:
+There is some ideal amount of memory associated with a block, and dividing up
+your data into ideal-sized blocks leads to the best performance. The ideal
+size of a block depends on which GPU model you're using.
+
+We need to change the kernel function to use CUDA's thread index,
+`threadIdx.x`. This changes the function definition to be the following:
 
 ~~~
 __global__ void add(int *a, int *b, int *c) {
@@ -73,19 +87,22 @@ __global__ void add(int *a, int *b, int *c) {
 > {: .solution}
 {: .challenge}
 
-If using both blocks and threads parallelizes your work, why have two options? This is because of the ability to share data between threads. You can do this by defining shared variables in your kernel functions that are visible to all running threads.
+You can define shared variables in your kernel functions that are visible to
+all running threads in a block. Maybe you want to have a flag to record
+whether some unusual condition arose while processing a block of data?
 
 ~~~
 __global__ void add(int *a, int *b, int *c) {
-   __shared__ int status;
+   __shared__ int block_status;
    c[threadIdx.x] = a[threadIdx.x] + b[threadIdx.x];
 }
 ~~~
 {: .source}
 
-This example would let you have a status flag that threads could test, and set, in order to communicate their status to other threads.
-
-You can also synchronize the execution of code by setting barriers to get threads to reach common points in the problem. Let's say that you are evolving some system and need all of the threads to finish their work before going onto the next step. This is where synchronization comes into play.
+You can also synchronize the execution of code by setting barriers to get
+threads to reach common points in the problem. Let's say that you are evolving
+some system and need all of the threads to finish their work before going onto
+the next step. This is where synchronization comes into play.
 
 ~~~
 # Do the current time step
@@ -95,3 +112,4 @@ __syncthreads();
 {: .source}
 
 This helps avoid problems like race conditions, where incorrect data is being used in your calculation.
+
