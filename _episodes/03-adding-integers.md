@@ -63,7 +63,14 @@ cudaMemcpy(d_a, &a, sizeof(int), cudaMemcpyHostToDevice);
 When you are ready to copy results back to the main CPU memory, you use the same memory copying function, but with the last parameter changed to 'cudaMemcpyDeviceToHost'. 
 
 > ## Adding two integers
-> How can you get your GPU card to add two integers?
+> Write the code to have the GPU card to add two integers.
+>
+> You have all the pieces you need.
+> * The kernel function `add()` at the top of this page
+> * Patterns for `cudaMalloc()` and `cudaMemcpy()`
+> ** You'll need to allocate GPU memory for two inputs and one output
+> * Call the kernel function with `add<<<1,1>>>(...)`
+> * Release the allocated GPU memory with `cudaFree()`
 >
 > > Manual pages:
 > >  * <a href="https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__MEMORY.html#group__CUDART__MEMORY_1gc263dbe6574220cc776b45438fc351e8">cudaMemcpy</a>
@@ -100,4 +107,4 @@ When you are ready to copy results back to the main CPU memory, you use the same
 > {: .solution}
 {: .challenge}
 
-Next, we will look at how to run parallel code.
+We still haven't done anything in parallel. We'll do that next.
