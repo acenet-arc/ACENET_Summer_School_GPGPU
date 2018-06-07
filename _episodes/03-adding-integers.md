@@ -107,4 +107,11 @@ When you are ready to copy results back to the main CPU memory, you use the same
 > {: .solution}
 {: .challenge}
 
+Oh, and one more thing: We should add `cudaDeviceSynchronize()` just before we
+copy back the results. The CPU code is not required to wait for the GPU code to
+complete before it continues. This call will force it to wait. This is another
+one of those errors that will probably not occur until long after you've
+stopped expecting it, and then when it does, you'll have no clue what's going
+on.
+
 We still haven't done anything in parallel. We'll do that next.
