@@ -95,7 +95,8 @@ $ cat testgpu.sh
 #SBATCH --account=acenet-wa
 #SBATCH --reservation=acenet-wr_gpu
 #SBATCH --gres=gpu:1
-#SBATCH --cpus-per-task=6
+#SBATCH --cpus-per-task=16
+#SBATCH --mem=60G
 #SBATCH --time=00:05:00
 nvidia-smi
 $ sbatch testgpu.sh
