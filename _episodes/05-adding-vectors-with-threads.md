@@ -19,16 +19,22 @@ In the Adding Vectors example we just finished, we used creates multiple blocks
 with `<<<N,1>>>`. Now we will use the second parameter to create threads
 instead.
 
-What is the difference? A GPU typically has several (2, or 4, or 6...)
-_streaming multiprocessors_ (SMs). A block is handled by one SM, though each
-SM may handle many blocks in succession.  And each SM supports many threads---
-typically in multiples of 32. See the <a href="">CUDA C Programming Guide</a>
-for pictures (e.g. Fig 7).  Threads can easily access and share the data within
-a block.
+What is the difference? A GPU typically has several _streaming multiprocessors_
+(SMs). A block is handled by one SM, though each SM may handle many blocks in
+succession.  And each SM supports many threads--- typically in multiples of 32.
+See the 
+<a href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html">CUDA
+C Programming Guide</a> for pictures (Figures 5,6,7).  Threads can quickly access
+and share the data within a block.
 
-There is some ideal amount of memory associated with a block, and dividing up
-your data into ideal-sized blocks leads to the best performance. The ideal
-size of a block depends on which GPU model you're using.
+The <a href="https://images.nvidia.com/content/pdf/tesla/whitepaper/pascal-architecture-whitepaper.pdf">P100
+GPU model</a> available at 
+<a href="https://docs.computecanada.ca/wiki/Graham">Graham</a>
+and <a href="https://docs.computecanada.ca/wiki/Cedar">Cedar</a>
+has 56 SMs, each supporting 64 single-precision threads or 32 double-precision
+threads. So if you are doing double-precision calculations, each GPU has
+effectively 56*32 = 1792 cores. But to take advantage of them you need to use
+both blocks and threads.
 
 We need to change the kernel function to use CUDA's thread index,
 `threadIdx.x`. This changes the function definition to be the following:
