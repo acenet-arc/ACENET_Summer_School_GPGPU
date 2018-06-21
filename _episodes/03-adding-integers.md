@@ -1,7 +1,7 @@
 ---
 title: "Adding Two Integers"
 teaching: 10
-exercises: 20
+exercises: 10
 questions:
 - "How is data communicated between CPU and GPU?"
 - "How is memory handled?"

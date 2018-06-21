@@ -1,6 +1,6 @@
 ---
 title: "Adding vectors with a GPU using threads"
-teaching: 20
+teaching: 10
 exercises: 20
 questions:
 - "What is the difference between blocks and threads?"

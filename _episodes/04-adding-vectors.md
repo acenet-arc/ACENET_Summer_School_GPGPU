@@ -1,7 +1,7 @@
 ---
 title: "Adding vectors with a GPU"
 teaching: 15
-exercises: 25
+exercises: 10
 questions:
 - "How to parallelize code with CUDA"
 objectives:
