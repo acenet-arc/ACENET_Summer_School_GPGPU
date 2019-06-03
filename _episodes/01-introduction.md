@@ -67,17 +67,17 @@ One way is to use `srun`, which will (if possible) run the
 program on a node and return immediately:
 
 ~~~
-$ srun --account=acenet-wa --reservation=acenet-wr_gpu --gres=gpu:1 --cpus-per-task=16 --mem=60G --time=5 nvidia-smi
+$ srun --account=acenet-wa --reservation=acenet-wr_gpu --gres=gpu:1 --cpus-per-task=10 --mem=40G --time=5 nvidia-smi
 ~~~
 {: .source}
 
-That asks for one GPU card and 6 CPU cores (there are 2 GPUs and 32 CPU cores
-on each GPU-equipped node at Graham), and 5 minutes maximum run time.  This is
+That asks for one GPU card and 10 CPU cores (there are 4 GPUs and 40 CPU cores
+on each GPU-equipped node at Béluga), and 5 minutes maximum run time.  This is
 obviously a lot to type each time you want to run a simple test.  You can use
 the shell `alias` command to save it:
 
 ~~~
-$ alias testgpu='srun --account=acenet-wa --reservation=acenet-wr_gpu --gres=gpu:1 --cpus-per-task=16 --mem=60G --time=5'
+$ alias testgpu='srun --account=acenet-wa --reservation=acenet-wr_gpu --gres=gpu:1 --cpus-per-task=10 --mem=40G --time=5'
 $ testgpu nvidia-smi
 ...
 $ testgpu ./hello_world
@@ -92,11 +92,12 @@ the `srun` form to do most of our tests, or `sbatch`:
 
 ~~~
 $ cat testgpu.sh
+#!/bin/bash
 #SBATCH --account=acenet-wa
 #SBATCH --reservation=acenet-wr_gpu
 #SBATCH --gres=gpu:1
-#SBATCH --cpus-per-task=16
-#SBATCH --mem=60G
+#SBATCH --cpus-per-task=10
+#SBATCH --mem=40G
 #SBATCH --time=00:05:00
 nvidia-smi
 $ sbatch testgpu.sh

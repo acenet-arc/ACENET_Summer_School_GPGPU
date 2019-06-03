@@ -4,10 +4,10 @@ title: Setup
 permalink: /setup/
 ---
 
-This lesson will be carried out on the Graham cluster.
+This lesson will be carried out on the Béluga cluster.
 
 ~~~
-ssh username@graham.computecanada.ca
+ssh username@beluga.computecanada.ca
 ~~~
 {: .bash}
 
