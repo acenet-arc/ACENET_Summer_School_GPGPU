@@ -5,11 +5,11 @@ exercises: 5
 questions:
 - "How to compile and run Hello World"
 objectives:
-- "To be able to compile CUDA code"
+- "Compile and run some CUDA code"
 keypoints:
 - "Use nvcc to compile"
 - "CUDA source files are suffixed .cu"
-- "Use srun to execute a test on a GPU node"
+- "Use salloc to get an interactive session on a GPU node for testing"
 ---
 
 The traditional C-language Hello World program is:
@@ -60,7 +60,7 @@ this sets up your work so that everything is divided into M blocks, with each bl
 
 ## Running on a GPU node
 
-You can execute `hello_world` on the login node simply by naming it:
+You could execute `hello_world` on the login node simply by naming it:
 
 ~~~
 $ ./hello_world
@@ -68,19 +68,7 @@ Hello World
 ~~~
 {: .source}
 
-But the login nodes on the cluster we're using don't have GPUs.  To run it on a
-GPU node, use one of the Slurm commands we showed in the previous episode:
-
-~~~
-$ srun --account=acenet-ss --reservation=acenet-ss_gpu --gres=gpu:1 --cpus-per-task=6 --time=5 ./hello_world
-Hello World
-~~~
-{: .source}
-
-Or if you ran the `alias` command from the last episode:
-
-~~~
-$ testgpu ./hello_world
-~~~
-{: .source}
-
+But the login nodes on the cluster we're using don't have GPUs, so how does
+that work?  You could run it on a GPU node using `sbatch` or `salloc` as shown
+in the previous episode, but the result will be the same because this code
+doesn't actually do anything interesting with the GPU yet.  Let's fix that next.

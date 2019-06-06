@@ -63,45 +63,29 @@ needs to be running on a node with no GPU.
 
 To actually get at a GPU we have to go through 
 <a href="https://docs.computecanada.ca/wiki/Running_jobs#Interactive_jobs">Slurm</a>.
-One way is to use `srun`, which will (if possible) run the 
-program on a node and return immediately:
+The "normal" way is to use `sbatch`, which will queue up a job for execution:
 
 ~~~
-$ srun --account=acenet-wa --reservation=acenet-wr_gpu --gres=gpu:1 --cpus-per-task=10 --mem=40G --time=5 nvidia-smi
+$ cat testjob
+#!/bin/bash
+#SBATCH --account=acenet-wa 
+#SBATCH --reservation=acenet-wr_gpu
+#SBATCH --gres=gpu:1    # THIS IS THE KEY LINE
+#SBATCH --cpus-per-task=10
+#SBATCH --mem=40G
+#SBATCH --time=0:5:0
+nvidia-smi
+$ sbatch testjob
 ~~~
 {: .source}
 
 That asks for one GPU card and 10 CPU cores (there are 4 GPUs and 40 CPU cores
-on each GPU-equipped node at Béluga), and 5 minutes maximum run time.  This is
-obviously a lot to type each time you want to run a simple test.  You can use
-the shell `alias` command to save it:
-
-~~~
-$ alias testgpu='srun --account=acenet-wa --reservation=acenet-wr_gpu --gres=gpu:1 --cpus-per-task=10 --mem=40G --time=5'
-$ testgpu nvidia-smi
-...
-$ testgpu ./hello_world
-...
-~~~
-{: .source}
+on each GPU-equipped node at Béluga), and 5 minutes maximum run time.  Five
+minutes is foolishly short for a production job, but we're testing, so this
+should be okay.
 
 Alternatively we could use `salloc` to request a GPU node, or part of one, for
-a few hours and start an interactive session there. Because we don't have
-enough nodes reserved to provide a GPU for each person in the course, we'll use
-the `srun` form to do most of our tests, or `sbatch`:
-
-~~~
-$ cat testgpu.sh
-#!/bin/bash
-#SBATCH --account=acenet-wa
-#SBATCH --reservation=acenet-wr_gpu
-#SBATCH --gres=gpu:1
-#SBATCH --cpus-per-task=10
-#SBATCH --mem=40G
-#SBATCH --time=00:05:00
-nvidia-smi
-$ sbatch testgpu.sh
-~~~
-{: .source}
-
+and start an interactive session there. Because we don't have enough nodes
+reserved to provide a GPU for each person in the course, we'll use the `sbatch`
+form to do most of our tests.  
 
