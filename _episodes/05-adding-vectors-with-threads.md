@@ -27,16 +27,21 @@ See the
 C Programming Guide</a> for pictures (Figures 5,6,7).  Threads can quickly access
 and share the data within a block.
 
-The <a href="https://images.nvidia.com/content/pdf/tesla/whitepaper/pascal-architecture-whitepaper.pdf">P100
-GPU model</a> available at 
+The P100 GPU model available at 
 <a href="https://docs.computecanada.ca/wiki/Graham">Graham</a>
 and <a href="https://docs.computecanada.ca/wiki/Cedar">Cedar</a>
 has 56 SMs, each supporting 64 single-precision threads or 32 double-precision
 threads. So if you are doing double-precision calculations, each GPU has
-effectively 56*32 = 1792 cores. But to take advantage of them you need to use
-both blocks and threads.
+effectively 56*32 = 1792 cores.
+At <a href="https://docs.computecanada.ca/wiki/B%C3%A9luga/en">Béluga</a>
+there are newer
+<a href="https://videocardz.com/69378/nvidia-announces-tesla-v100-with-5120-cuda-cores">V100 GPUs</a>
+with 80 SMs, which again support 64 single-precision or 32
+double-precision threads each, for 2560 effective cores.
 
-We need to change the kernel function to use CUDA's thread index,
+But to take advantage of all these "CUDA cores" you need to use both blocks and threads.
+
+Let's change the kernel function to use CUDA's thread index,
 `threadIdx.x`. This changes the function definition to be the following:
 
 ~~~
