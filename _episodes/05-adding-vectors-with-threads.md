@@ -123,14 +123,14 @@ This helps avoid problems like race conditions, where incorrect data is being us
 
 This has been the barest of introductions to CUDA and GPU programming.
 Don't forget the CUDA Programming Guide we mentioned earlier:
-* https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html
+* <https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html>
 Here are two shorter tutorials, from NVidia:
-* https://devblogs.nvidia.com/easy-introduction-cuda-c-and-c/
-* https://devblogs.nvidia.com/even-easier-introduction-cuda/
+* <https://devblogs.nvidia.com/easy-introduction-cuda-c-and-c/>
+* <https://devblogs.nvidia.com/even-easier-introduction-cuda/>
 
 As mentioned in episode 1, there are other ways to program GPUs
 than CUDA. Here are two OpenACC tutorials, including one from
 Compute Canada:
-* https://www.openacc.org/get-started (videos)
-* https://docs.computecanada.ca/wiki/OpenACC_Tutorial (text)
+* <https://www.openacc.org/get-started> (videos)
+* <https://docs.computecanada.ca/wiki/OpenACC_Tutorial> (text)
 
