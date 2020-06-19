@@ -31,7 +31,22 @@ nvcc -o hello_world hello_world.c
 ~~~
 {: .bash}
 
-To get this to run with a GPU, you need to add some code to create and launch a kernel. A kernel is a portion of code that can be transfered to the GPU and run there. A simple example would look like the following.
+> ## Command not found?
+> If you get:
+>
+> ~~~
+> $ nvcc -o hello_world hello_world.c
+> ~~~
+> {: .language-bash}
+> ~~~
+> -bash: nvcc: command not found
+> ~~~
+> {: .output}
+>
+> ...you may have forgotten to run `module load cuda`.
+{: .callout}
+
+To get this to run with a GPU, you need to add some code to create and launch a **kernel**. A kernel is a portion of code that can be transfered to the GPU and run there. A simple example would look like the following.
 
 ~~~
 #include <stdio.h>
