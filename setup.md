@@ -4,10 +4,10 @@ title: Setup
 permalink: /setup/
 ---
 
-This lesson will be carried out on the Béluga cluster.
+This lesson will be carried out on our virtual cluster.
 
 ~~~
-ssh username@beluga.computecanada.ca
+ssh userXX@nova.acenetsummerschool.ca
 ~~~
 {: .bash}
 
