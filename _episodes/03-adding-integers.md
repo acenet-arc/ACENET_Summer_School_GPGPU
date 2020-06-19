@@ -21,7 +21,7 @@ __global__ void add(int *a, int *b, int *c) {
 ~~~
 {: .source}
 
-As you can see, we don't hand in the actual integers to be added, but pointers to where those integers are in memory. This is because the kernel function is called from the host CPU, but actually executes on the GPU and hence needs to point to memory locations within the GPU memory.
+Those asterisks may be unfamiliar to you if you haven't done much C programming. They mean that the parameters being supplied are not the integers to be added, but instead **pointers** to where those integers are in memory. This is because the kernel function is *called* from the host CPU, but *executes* on the GPU and hence needs to point to memory locations within the GPU memory.  The line `*c = *a + *b` says "take the values at addresses `a` and `b`, add them together, and store the result at the address `c`."  So `a, b` and `c` are locations in memory, and `*a, *b` and `*c` are the values stored at those locations.
 
 > ## Memory Allocation
 > In C programs, there are two ways that memory for data can be allocated. The first is having them statically defined at the initial declaration.
