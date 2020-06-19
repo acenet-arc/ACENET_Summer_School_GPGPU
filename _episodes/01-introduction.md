@@ -78,8 +78,8 @@ $ sbatch testjob
 {: .source}
 
 That asks for one GPU card and 10 CPU cores.  This would be perfect for the national
-<a href="https://docs.computecanada.ca/wiki/B%C3%A9luga/en">Béluga</a>
-cluster, since the GPU nodes there have 4 GPUs, 40 CPU cores, and more than 160GB of RAM.  
+<a href="https://docs.computecanada.ca/wiki/B%C3%A9luga/en">Béluga</a> cluster, 
+since the GPU nodes there have 4 GPUs, 40 CPU cores, and more than 160GB of RAM.  
 Five minutes of run time is foolishly short for a production job, but we're testing, 
 so this should be okay.
 
@@ -108,3 +108,4 @@ Fri Jun 19 14:40:32 2020
 |  No running processes found                                                 |
 +-----------------------------------------------------------------------------+
 ~~~~
+{: .bash}
