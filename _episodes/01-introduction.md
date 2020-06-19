@@ -57,19 +57,17 @@ nvidia-smi
 
 ## Running on a GPU node
 
-If you run `nvidia-smi` on a login node, it will complain that it can't
-communicate with the NVIDIA drive. This should be no surprise: No NVIDIA driver
-needs to be running on a node with no GPU.
+If you run `nvidia-smi` on a login node or on a regular compute node, it will complain that 
+it can't communicate with the NVIDIA driver. This should be no surprise: No NVIDIA driver
+needs to be running on a node that has no GPU.
 
-To actually get at a GPU we have to go through 
+To get access to a GPU we have to go through 
 <a href="https://docs.computecanada.ca/wiki/Running_jobs#Interactive_jobs">Slurm</a>.
-The "normal" way is to use `sbatch`, which will queue up a job for execution:
+The "normal" way is to use `sbatch`, which will queue up a job for execution later:
 
 ~~~
 $ cat testjob
 #!/bin/bash
-#SBATCH --account=acenet-wa 
-#SBATCH --reservation=acenet-wr_gpu
 #SBATCH --gres=gpu:1    # THIS IS THE KEY LINE
 #SBATCH --cpus-per-task=10
 #SBATCH --mem=40G
@@ -79,13 +77,34 @@ $ sbatch testjob
 ~~~
 {: .source}
 
-That asks for one GPU card and 10 CPU cores (there are 4 GPUs and 40 CPU cores
-on each GPU-equipped node at Béluga), and 5 minutes maximum run time.  Five
-minutes is foolishly short for a production job, but we're testing, so this
-should be okay.
+That asks for one GPU card and 10 CPU cores.  This would be perfect for the national
+<a href="https://docs.computecanada.ca/wiki/B%C3%A9luga/en">Béluga</a>
+cluster, since the GPU nodes there have 4 GPUs, 40 CPU cores, and more than 160GB of RAM.  
+Five minutes of run time is foolishly short for a production job, but we're testing, 
+so this should be okay.
 
-Alternatively we could use `salloc` to request a GPU node, or part of one, for
-and start an interactive session there. Because we don't have enough nodes
-reserved to provide a GPU for each person in the course, we'll use the `sbatch`
-form to do most of our tests.  
+Alternatively we could use `salloc` to request a GPU node, or part of one, 
+and start an interactive shell there. Because we don't have enough nodes
+on our virtual cluster to provide a GPU for each person in the course, we'll use 
+yet a third form that you already saw in a previous week, `srun`:
 
+~~~~
+$ srun --gres=gpu:1  nvidia-smi
+Fri Jun 19 14:40:32 2020
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 440.56       Driver Version: 440.56       CUDA Version: 10.2     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|===============================+======================+======================|
+|   0  GRID V100D-8C       On   | 00000000:00:05.0 Off |                    0 |
+| N/A   N/A    P0    N/A /  N/A |    560MiB /  8192MiB |      0%      Default |
++-------------------------------+----------------------+----------------------+
+
++-----------------------------------------------------------------------------+
+| Processes:                                                       GPU Memory |
+|  GPU       PID   Type   Process name                             Usage      |
+|=============================================================================|
+|  No running processes found                                                 |
++-----------------------------------------------------------------------------+
+~~~~
