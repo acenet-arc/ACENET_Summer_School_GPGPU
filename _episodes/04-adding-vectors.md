@@ -95,6 +95,7 @@ __global__ void add(int *a, int *b, int *c) {
 > >    cudaMemcpy(d_a, a, size, cudaMemcpyHostToDevice);
 > >    cudaMemcpy(d_b, b, size, cudaMemcpyHostToDevice);
 > >    add<<<N,1>>>(d_a, d_b, d_c);
+> >    cudaDeviceSynchronize();
 > >    cudaMemcpy(c, d_c, size, cudaMemcpyDeviceToHost);
 > >    cudaFree(d_a); cudaFree(d_b); cudaFree(d_c);
 > >    printf("%d + %d = %d\n", a[0],   b[0],   c[0]);
