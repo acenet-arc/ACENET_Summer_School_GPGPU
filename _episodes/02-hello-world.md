@@ -84,6 +84,13 @@ Hello World
 {: .source}
 
 But the login nodes on the cluster we're using don't have GPUs, so how does
-that work?  You could run it on a GPU node using `sbatch` or `salloc` as shown
-in the previous episode, but the result will be the same because this code
-doesn't actually do anything interesting with the GPU yet.  Let's fix that next.
+that work?  You could run it on a GPU node using 
+
+~~~
+$ srun --gres=gpu:1 hello_world
+Hello World
+~~~
+{: .source}
+
+as shown in the previous episode, but the result will be the same because this code
+doesn't actually do anything with the GPU yet.  Let's fix that next.
