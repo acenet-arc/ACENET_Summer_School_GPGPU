@@ -21,7 +21,19 @@ __global__ void add(int *da, int *db, int *dc) {
 ~~~
 {: .source}
 
-Those asterisks may be unfamiliar to you if you haven't done much C programming. They mean that the parameters being supplied are not the integers to be added, but instead **pointers** to where those integers are in memory. This is because the kernel function is *called* from the host CPU, but *executes* on the GPU and hence needs to point to memory locations within the GPU memory.  The line `*c = *a + *b` says "take the values at addresses `a` and `b`, add them together, and store the result at the address `c`."  So `a, b` and `c` are locations in memory, and `*a, *b` and `*c` are the values stored at those locations.
+Those asterisks may be unfamiliar to you if you haven't done much C 
+programming. They mean that the parameters being supplied are not the 
+integers to be added, but instead **pointers** to where those integers 
+are in memory. This is because the kernel function is *called* from 
+the host CPU, but *executes* on the GPU and hence needs to point to 
+memory locations within the GPU memory.  The line `*c = *a + *b` says 
+"take the values at addresses `a` and `b`, add them together, and 
+store the result at the address `c`."  So `a, b` and `c` are locations 
+in memory, and `*a, *b` and `*c` are the values stored at those locations.
+
+We'll also need to determine the address (that is, the storage location)
+of a few variables.  The C operator to do that is the ampersand, `&`.
+`&x` returns the address of `x`, which is to say, a pointer to `x`.
 
 > ## Memory Allocation
 > In C programs, there are two ways that memory for data can be allocated. The first is define it *statically* when a variable is declared.
@@ -42,7 +54,11 @@ Those asterisks may be unfamiliar to you if you haven't done much C programming.
 > {: .source}
 {: .callout}
 
-Since we are dealing with two physical devices (the host CPU and the GPU) we need to work with dynamically allocated memory for data. There are CUDA variants for `malloc` and `free` that handle allocation of memory on the GPU. These functions actually deal with pointers to pointers(!), so it looks like the following:
+Since we are dealing with two physical devices (the host CPU and the GPU) 
+we need to work with dynamically allocated memory for data. There are 
+CUDA variants for `malloc` and `free` that handle allocation of memory 
+on the GPU. These functions deal with pointers to pointers(!), so it 
+looks like the following:
 
 ~~~
 int *d_a;
@@ -50,17 +66,25 @@ cudaMalloc((void **)&d_a, sizeof(int));
 ~~~
 {: .source}
 
-You then need to copy data from the CPU memory to the GPU memory with another function from the CUDA library. This looks like:
+You then need to copy data from the CPU memory to the GPU memory with 
+another function from the CUDA library. This looks like:
 
 ~~~
-int a = 7;
-int *d_a;
-cudaMalloc((void **)&d_a, sizeof(int));
 cudaMemcpy(d_a, &a, sizeof(int), cudaMemcpyHostToDevice);
 ~~~
 {: .source}
 
-When you are ready to copy results back to the main CPU memory, you use the same memory copying function, but with the last parameter changed to 'cudaMemcpyDeviceToHost'. 
+The order of arguments here is *destination address, source address, 
+number of bytes*, and then *cudaMemcpyKind*, which is a symbolic constant 
+defined by the CUDA library:  Either `cudaMemcpyHostToDevice` or 
+`cudaMemcpyDeviceToHost`.  When you are ready to copy results back to 
+the main CPU memory, you use the same memory copying function, with
+the destination and source addresses in the right order and the right 
+and the correct constant in the last position.
+
+This language will come up again and again in CUDA: 
+The CPU and its associated memory is the **host**, 
+while the GPU and its associated memory is the **device**.
 
 > ## Adding two integers
 > Write the code to have the GPU card to add two integers.
@@ -83,15 +107,14 @@ When you are ready to copy results back to the main CPU memory, you use the same
 > > ~~~
 > > #include <stdio.h>
 > > #include <stdlib.h>
-> > #include <cuda.h>
 > > 
 > > __global__ void add(int *da, int *db, int *dc) {
 > >    *dc = *da + *db;
 > > }
 > > 
 > > int main(int argc, char **argv) {
-> >   int a, b, c;
-> >   int *da, *db, *dc;
+> >   int a, b, c;        // We've chosen static allocation here for host storage..
+> >   int *da, *db, *dc;  // ...but device storage must be dynamically allocated
 > >   a=1; b=2;
 > >   cudaMalloc((void **)&da, sizeof(int));
 > >   cudaMalloc((void **)&db, sizeof(int));
