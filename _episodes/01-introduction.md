@@ -47,8 +47,9 @@ with the driver portion. CUDA only works with Nvidia graphics cards.
 
 Along with drivers, library files, and compilers, CUDA comes with several
 utilities that you can use to manage your work. One very useful tool is
-'nvidia-smi'.  There are also tools for profiling and debugging CUDA code,
-which we will not have time to discuss today.
+'nvidia-smi' which lets you check the basic status of your GPU card, like, 
+"Do I have one?" and "Is it working". 
+There are also tools for profiling and debugging CUDA code.
 
 ~~~
 nvidia-smi
