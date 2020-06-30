@@ -14,7 +14,6 @@ ssh userXX@nova.acenetsummerschool.ca
 To set up your environment, load the appropriate module with:
 
 ~~~
-module purge
 module load cuda
 ~~~
 {: .bash}
