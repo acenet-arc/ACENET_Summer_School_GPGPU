@@ -115,7 +115,8 @@ while the GPU and its associated memory is the **device**.
 > > int main(int argc, char **argv) {
 > >   int a, b, c;        // We've chosen static allocation here for host storage..
 > >   int *da, *db, *dc;  // ...but device storage must be dynamically allocated
-> >   a=1; b=2;
+> >   a = atoi(argv[1]);  // Read the addends from the command line args
+> >   b = atoi(argv[2]);
 > >   cudaMalloc((void **)&da, sizeof(int));
 > >   cudaMalloc((void **)&db, sizeof(int));
 > >   cudaMalloc((void **)&dc, sizeof(int));
@@ -128,6 +129,9 @@ while the GPU and its associated memory is the **device**.
 > > }
 > > ~~~
 > > {: .source}
+> > 
+> > Compile with `nvcc add.cu -o add`, test with `srun --gres=gpu:1 add 1 2`
+> > 
 > {: .solution}
 {: .challenge}
 
