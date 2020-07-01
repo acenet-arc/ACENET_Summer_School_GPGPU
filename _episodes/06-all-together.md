@@ -21,15 +21,23 @@ by this image from <a href="https://developer.nvidia.com/blog/even-easier-introd
 
 TODO: check legalities and insert image
 
-CUDA provides the number of blocks in `gridDim.x`, and the number of threads in
-a block in `blockDim.x`.  The index of the current block is in `blockIdx.x` and
-the thread index within that block is `threadIdx.x`, both of which we saw
-earlier.
+The number of blocks is in `gridDim.x`--- we've been calling that `numBlocks`
+in our CPU-side code---  and the number of threads in a block is `blockDim.x`
+which we've been calling `numThreads`.  CUDA also provides the index of the
+current block in `blockIdx.x` and the thread index within that block is
+`threadIdx.x`, both of which we saw earlier.
+
+(If you've been wondering about the `.x` on all of these, it's there because
+you have the option of specifying 2- or 3-dimensional arrays of blocks, and
+threads within blocks, for natural indexing of 2- and 3-dimensional data
+structures likes matrices or volumes.  See the 
+<a href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html">Programming Guide</a>
+if you want to learn more about this.)
 
 We'll change our kernel function one more time, to escape the limitation of the
 thread count and get (we hope) maximal performance.  We'll also put a loop back
 in, in case the size of our data is greater than the number of (blocks X
-threads) we have to handle it:
+threads) we have:
 
 ~~~
 __global__ void add(int n, int *a, int *b, int *c) {
@@ -41,64 +49,126 @@ __global__ void add(int n, int *a, int *b, int *c) {
 ~~~
 {: .source}
 
-Now the size of dataset (i.e. the length of our vectors) we can handle
-correctly no longer need depend on the number of blocks and threads.  But we
-still need a little code to choose the right number of blocks for our data.
+Now the size of dataset (i.e. the length of the vectors) we can handle
+correctly no longer depends on the number of blocks and threads.
+
+We still need to choose a number of blocks and a thread count.
+
+We've seen that threads-per-block can't go higher than 1024, and 256 is a
+fairly conventional choice.  We could choose a number of blocks that exactly
+covers the size of our arrays by dividing `N / numthreads`, and adding an extra
+block to handle any remainder from the division.  But by introducing a loop
+into the kernel we just wrote, it should be able to handle any choice of block
+and thread count that we give it.  So now we're free to play with `numBlocks`
+and `numThreads` all we like, checking performance with `nvprof` to see how
+much difference various choices make.
+
 
 
 > ## Putting it all together
-> Copy the Adding Vectors example you just finished, and change the copy to use
-> both threads and blocks.  Verify that it still produces correct results.  Use
-> `nvprof` to compare the performance to that of the two previous solutions.
+> Modify your code from the previous episode to use both threads and blocks.
+> Verify that it still produces correct results.  Use `nvprof` to compare the
+> performance to that of the two previous solutions.
 > 
 > > ## Solution
-> > ~~~
-> > #include <stdio.h>
-> > #include <stdlib.h>
+> > 
+> > Here's a solution that includes a few more "bells and whistles".
+> > Most importantly, you need to specify the addends, the size of the
+> > arrays, and the number of threads and blocks, to make it easier
+> > to explore the correctness and performance of these choices.
 > >
-> > __global__ void add(int n, int *a, int *b, int *c) {
+> > ~~~
+> > #include <stdio.h> 
+> > #include <stdlib.h>
+> >  
+> > __global__ void add(int N, int *da, int *db, int *dc) {
+> >    // This is a CUDA idiom called the grid-stride loop.
 > >    int index = blockIdx.x * blockDim.x + threadIdx.x;
-> >    int stride = blockDim.x;
-> >    for (int i = index; i < n; i += stride)
-> >       c[i] = a[i] + b[i];
+> >    int stride = blockDim.x * gridDim.x;
+> >    for (int i = index; i < N; i += stride)
+> >       dc[i] = da[i] + db[i];
 > > }
 > > 
 > > int main(int argc, char **argv) {
-> >    int a_in = atoi(argv[1]);  // first addend
-> >    int b_in = atoi(argv[2]);  // second addend
-> >    int N = atoi(argv[3]);     // length of arrays
-> >    int numThreads = 512;
-> >    int *a, *b, *c;
-> >    int *d_a, *d_b, *d_c;
+> >    // Read values from cmd line.
+> >    if (argc < 6) {
+> >       printf("Usage:\n %s a b N threads blocks\n", argv[0]);
+> >       return(-1);
+> >    }
+> >    int a_in = atoi(argv[1]);
+> >    int b_in = atoi(argv[2]);
+> >    int N = atoi(argv[3]);
+> >    int numThreads = atoi(argv[4]);
+> >    int numBlocks = atoi(argv[5]);
+> >    // Or to get the block count that covers N elements:
+> >    // int numBlocks = (N + numThreads - 1) / numThreads;
+> > 
+> >    // Calculate size of arrays in bytes.
 > >    int size = N * sizeof(int);
+> >    // Allocate host storage.
+> >    int *a, *b, *c;
 > >    a = (int *)malloc(size);
 > >    b = (int *)malloc(size);
 > >    c = (int *)malloc(size);
-> >    // Initialize the input vectors
+> >    // Initialize the input vectors.
 > >    for (int i=0; i<N; ++i) {
-> >       a[i] = a_in; b[i] = b_in; c[i] = 0; }
-> >    cudaMalloc((void **)&d_a, size);
-> >    cudaMalloc((void **)&d_b, size);
-> >    cudaMalloc((void **)&d_c, size);
-> >    cudaMemcpy(d_a, a, size, cudaMemcpyHostToDevice);
-> >    cudaMemcpy(d_b, b, size, cudaMemcpyHostToDevice);
-> >    // Calculate numBlocks to cover our data
-> >    int numBlocks = (N + numThreads - 1) / numThreads;
-> >    add<<<numBlocks,numThreads>>>(N, d_a, d_b, d_c);
+> >       a[i] = a_in; 
+> >       b[i] = b_in;
+> >       c[i] = 0;
+> >    }
+> > 
+> >    // Allocate device storage.
+> >    int *da, *db, *dc;
+> >    cudaMalloc((void **)&da, size);
+> >    cudaMalloc((void **)&db, size);
+> >    cudaMalloc((void **)&dc, size);
+> > 
+> >    // Copy data to GPU.
+> >    cudaMemcpy(da, a, size, cudaMemcpyHostToDevice);
+> >    cudaMemcpy(db, b, size, cudaMemcpyHostToDevice);
+> > 
+> >    // Execute the kernel on the GPU.
+> >    add<<<numBlocks,numThreads>>>(N, da, db, dc);
 > >    cudaDeviceSynchronize();
-> >    cudaMemcpy(c, d_c, size, cudaMemcpyDeviceToHost);
-> >    cudaFree(d_a); cudaFree(d_b); cudaFree(d_c);
-> >    printf("%d + %d = %d\n", a[0],   b[0],   c[0]);
-> >    printf("...\n");
-> >    printf("%d + %d = %d\n", a[N-1], b[N-1], c[N-1]);
+> > 
+> >    // Copy results back from GPU.
+> >    cudaMemcpy(c, dc, size, cudaMemcpyDeviceToHost);
+> >    
+> >    // Print results from each end of the array.
+> >    printf("%d plus %d equals %d\n", a[0], b[0], c[0]);
+> >    printf(" ...\n");
+> >    printf("%d plus %d equals %d\n", a[N-1], b[N-1], c[N-1]);
+> > 
+> >    // Check for stray errors somewhere in the middle.
+> >    // We won't check them all, quit after first error.
+> >    int expected = a_in + b_in;
+> >    for (int i=0; i<N; ++i) {
+> >       if (c[i] != expected) {
+> >          printf("Wrong sum %d at element %d!\n", c[i], i);
+> > 	 break;
+> >       }
+> >    }
+> > 
+> >    // Free all allocated memory.
+> >    cudaFree(da); cudaFree(db); cudaFree(dc);
 > >    free(a); free(b); free(c);
 > > }
 > > ~~~
 > > {: .source}
 > >
-> > To be extra careful, modify this code so that instead of checking only the
-> > first and last elements, check that ALL the elements we get back from the
-> > GPU are what we expect.  No, you don't want to print them all!
+> > Compile it and invoke it like this:
+> >
+> > ~~~
+> > $ nvcc addvec_final.cu -o final
+> > $ srun --gres=gpu:1 final 2 2 10000 256 80
+> > ~~~
+> > {: .bash}
+> > 
+> > Remember, you can also use `salloc` in place of `srun` to get a shell
+> > prompt on a GPU node so you can more easily run multiple trials, and using
+> > `nvprof final ...` will give you performance information.  (Except on our
+> > virtual cluster.  Sorry!)
+> >
 > {: .solution}
 {: .challenge}
 
