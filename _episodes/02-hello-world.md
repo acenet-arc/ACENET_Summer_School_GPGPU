@@ -27,7 +27,7 @@ int main(int argc, char **argv) {
 The CUDA compiler is a C compiler that can generate binary code that will run on CPUs as well as code that will run on GPUs. The compiler is called `nvcc`. Use it to compile this Hello World with the following command:
 
 ~~~
-nvcc -o hello_world hello_world.c
+nvcc -o hello_world hello_world.cu
 ~~~
 {: .bash}
 
@@ -35,7 +35,7 @@ nvcc -o hello_world hello_world.c
 > If you get:
 >
 > ~~~
-> $ nvcc -o hello_world hello_world.c
+> $ nvcc -o hello_world hello_world.cu
 > ~~~
 > {: .language-bash}
 > ~~~
