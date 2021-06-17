@@ -8,7 +8,8 @@ objectives:
 - "Use CUDA threads"
 keypoints:
 - "Threads are the lowest level of parallelization on a GPU"
-- "Thread count must be a multiple of 32 and can't exceed 1024"
+- "A kernel function replaces the code *inside* the loop to be parallelized"
+- "The CUDA `<<<M,N>>>` notation replaces the loop itself"
 ---
 
 A GPU is not meant for doing one thing at a time; it's meant for doing
@@ -17,26 +18,30 @@ up what we're doing.
 
 Let's generalize the code we just wrote to add two _vectors_ of integers,
 instead of two integers. Instead of having statically defined variables to hold
-single integers, call `malloc` to create larger (CPU) memory spaces to store
-the vectors.  `malloc` returns a *pointer* to a block of memory of the
-size we tell it:
+single integers in the host (CPU) memory, we'll declare *pointers* to integers
+and then call `malloc` to create space for the vectors:
 
 ~~~
-a = (int *)malloc(size); 
+int *a; 
+int bytes = N * sizeof(int);
+a = (int *)malloc(bytes); 
 ~~~
 {: .source}
 
-...so after this `a` is not in *int* but a *pointer to int*.  Because of
-the relation between pointers and arrays in C, we can store and retrieve
-data from this allocated block of memory as if it were an array, with 
+Because of the relation between pointers and arrays in C, we can store and
+retrieve data from an allocated block of memory using array syntax,
 expressions like `a[i]`.
 
 We'll set the number of GPU threads to something larger than one by changing
-the second argument in the `<<<M,N>>>` when we call the kernel function.
+the second argument in the `<<<M,N>>>` when we call the kernel function.  Back
+in Episode 2 we mentioned that the first number, `M`, is the block count and
+the second, `N`, is the thread count.  For the moment let's use 512 threads,
+leave the block count at 1, and we'll come back and discuss those numbers
+later.
 
 We also need to change the kernel function to match.  The CUDA library provides
-several variables for indexing.  We'll talk more about them later, for now use
-`threadIdx.x`. Change the kernel function definition to the following:
+several variables for indexing.  We'll talk more about those later too, but for
+now use `threadIdx.x`. Change the kernel function definition to the following:
 
 ~~~
 __global__ void add(int *da, int *db, int *dc) {
@@ -53,11 +58,13 @@ function gets called potentially thousands of times in parallel--- which is why
 there's no loop in it.  The looping is implicit in the `<<<M,N>>>` decorator
 when we call the kernel.
 
-> ## Putting it all together
+> ## Exercise: From single integers to vectors
 >
-> Combine the pieces described above with your code from the previous exercise
+> Combine your code from the previous exercise and the pieces described above 
 > to add two vectors on the GPU.  You can just print the first and last results.
-> Make the size of the arrays 512, and use the same for the number of threads.
+> While it might be more realistic to populate the input vectors with random
+> numbers or something, for simplicity you can just populate each one with
+> `N` copies of the same number.
 >
 > If you're not accustomed to C programming or confused by `malloc`,
 > double up with another student who is familiar with C. They'll help you.
@@ -103,9 +110,20 @@ when we call the kernel.
 > > ~~~
 > > {: .source}
 > > 
-> > Once you've got that working, vary the number of threads and the
-> > number of elements and see what happens.  
+> > Don't forget: To get to a GPU you may need to do something like
+> > `srun --gres=gpu:1 addvec 1 2 512`.
 > >
 > {: .solution}
 {: .challenge}
+
+
+> ## Bonus exercise: (Move fast and) Break things
+> 
+> Once you've got the code working on 512 elements, vary the number of elements
+> and see what happens.  Do you have any idea why it does that?
+>
+> For even more fun, vary the number of threads.
+>
+{: .challenge}
+
 

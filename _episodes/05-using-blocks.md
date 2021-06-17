@@ -1,5 +1,5 @@
 ---
-title: "Adding vectors using blocks"
+title: "Using blocks instead of threads"
 teaching: 10
 exercises: 20
 questions:
@@ -12,14 +12,13 @@ keypoints:
 - "Use `nvprof` to profile CUDA functions"
 - "Blocks are the batches in which a GPU handles data"
 - "Blocks are handled by streaming multiprocessors (SMs)"
-- "Each block can have up to 1024 threads"
+- "Each block can have up to 1024 threads (on our current GPU cards)"
 ---
 
 In the Hello World example we saw the `<<<M,N>>>` syntax used in CUDA to call a
-kernel function, and learned that it creates M blocks and N threads per block.
-In the Adding Vectors example we just finished, we used create threads
-with `<<<1,N>>>`. Now we will use the first parameter to create blocks
-instead.
+kernel function, and we told you that it creates `M` blocks and `N` threads per
+block.  In the Adding Vectors example we just finished, we created threads with
+`<<<1,N>>>`. Now we will use the first parameter to create blocks instead.
 
 What's a block? A GPU typically has several _streaming multiprocessors_
 (SMs). A block is handled by one SM, though each SM may handle many blocks in
@@ -43,8 +42,9 @@ double-precision threads each, for 2560 effective cores.
 
 But to take advantage of all these "CUDA cores" you need to use both blocks and threads.
 
-Let's change the kernel function to use CUDA's block index,
-`blockIdx.x`. This changes the function definition to be the following:
+We'll start by doing something a little sillly, and just switch from threads to
+blocks. Change the kernel function to use CUDA's block index,
+`blockIdx.x`, like so:
 
 ~~~
 __global__ void add(int *a, int *b, int *c) {
@@ -53,7 +53,7 @@ __global__ void add(int *a, int *b, int *c) {
 ~~~
 {: .source}
 
-> ## Putting it all together
+> ## Exercise: Change threads to blocks
 > Copy the Adding Vectors example you just finished, and change the copy to use blocks instead of threads.
 > Verify that it still produces correct results.
 > 
@@ -99,12 +99,14 @@ __global__ void add(int *a, int *b, int *c) {
 > {: .solution}
 {: .challenge}
 
+## Measuring speed
+
 The point of using a GPU is speed, so how do we measure the speed of
 our kernel code and the various CUDA calls like `cudaMemcpy`?  CUDA
 provides the utility `nvprof` for this.  Here's some sample output:
 
 ~~~~
-nvprof ./avt 1 2 512
+$ nvprof ./addvec_blocks 1 2 512
 ==6473== NVPROF is profiling process 6473, command: ./addvec_blocks
 ==6473== Profiling application: ./addvec_blocks
 1 + 2 = 3

@@ -3,23 +3,22 @@ title: "Putting It All Together"
 teaching: 10
 exercises: 20
 questions:
-- "What's faster, thread or blocks?  Or both?"
-- "What other CUDA programming resoures are there?"
+- "How do blocks and threads work together?"
+- "What other GPU programming resoures are there?"
 objectives:
-- "To use a profiler to examine performance"
-- "To put blocks together with threads"
+- "To show how blocks and threads typically work together"
 keypoints:
-- "nvprof measures performance of CUDA GPU routines"
 - "A typical kernel indexes data using both blocks and threads"
 ---
 
 To take advantage of all these "CUDA cores" you need to use both blocks and threads.
 
-The family of CUDA variables defining blocks and threads is explained 
-by this image from <a href="https://developer.nvidia.com/blog/even-easier-introduction-cuda/">
+The family of CUDA variables defining blocks and threads can be explained 
+by referring to this image from 
+<a href="https://developer.nvidia.com/blog/even-easier-introduction-cuda/">
 "An Even Easier Introduction to CUDA"</a>:
 
-TODO: check legalities and insert image
+![CUDA indexing](../fig/cuda_indexing.png)
 
 The number of blocks is in `gridDim.x`--- we've been calling that `numBlocks`
 in our CPU-side code---  and the number of threads in a block is `blockDim.x`
@@ -27,16 +26,18 @@ which we've been calling `numThreads`.  CUDA also provides the index of the
 current block in `blockIdx.x` and the thread index within that block is
 `threadIdx.x`, both of which we saw earlier.
 
-(If you've been wondering about the `.x` on all of these, it's there because
+All the indexing is zero-based, like in C.
+
+If you're wondering about the `.x` on all of these, it's there because
 you have the option of specifying 2- or 3-dimensional arrays of blocks, and
 threads within blocks, for natural indexing of 2- and 3-dimensional data
 structures likes matrices or volumes.  See the 
-<a href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html">Programming Guide</a>
-if you want to learn more about this.)
+<a href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html">CUDA Programming Guide</a>
+if you want to learn more about this.
 
 We'll change our kernel function one more time, to escape the limitation of the
 thread count and get (we hope) maximal performance.  We'll also put a loop back
-in, in case the size of our data is greater than the number of (blocks X
+in, in case the size of our data is greater than the number of (blocks times
 threads) we have:
 
 ~~~
@@ -66,15 +67,16 @@ much difference various choices make.
 
 
 > ## Putting it all together
-> Modify your code from the previous episode to use both threads and blocks.
-> Verify that it still produces correct results.  Use `nvprof` to compare the
-> performance to that of the two previous solutions.
+> Introduce the `add()` kernel above into your code from the previous episodes,
+> and adjust the rest of the program to make it work.
+>  * Verify that it still produces correct results.
+>  * Use `nvprof` to compare the performance to that of the two previous solutions.
 > 
 > > ## Solution
 > > 
-> > Here's a solution that includes a few more "bells and whistles".
+> > Here's a version of the code that includes a few more "bells and whistles".
 > > Most importantly, you need to specify the addends, the size of the
-> > arrays, and the number of threads and blocks, to make it easier
+> > arrays, and the number of threads and blocks.  This makes it easier
 > > to explore the correctness and performance of these choices.
 > >
 > > ~~~
