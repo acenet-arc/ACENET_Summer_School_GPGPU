@@ -19,12 +19,11 @@ up what we're doing.
 Let's generalize the code we just wrote to add two _vectors_ of integers,
 instead of two integers. Instead of having statically defined variables to hold
 single integers in the host (CPU) memory, we'll declare *pointers* to integers
-and then call `malloc` to create space for the vectors.  This is how you would
-dynamically allocate space for a single integer:
+and then call `malloc` to create space for the vectors:
 
 ~~~
 int *a; 
-bytes = sizeof(int);
+int bytes = N * sizeof(int);
 a = (int *)malloc(bytes); 
 ~~~
 {: .source}
