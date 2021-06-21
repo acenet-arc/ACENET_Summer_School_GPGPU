@@ -4,20 +4,20 @@ title: Setup
 permalink: /setup/
 ---
 
-This lesson will be carried out on our virtual cluster.
+This lesson will work best if done on a real cluster, like Compute Canada's Béluga, Cedar, or Graham.
+If you haven't got an account on those, our virtual training cluster will also be fine
+although some of the profiling exercises might not work as described.
 
 ~~~
 ssh userXX@pcs.ace-net.training
 ~~~
 {: .bash}
 
-It should be equally possible to use one of the Compute Canada
-general purpose clusters if you already have an account there.
-To set up your environment, load the NVidia HPC Software Development Kit with:
+To set up your environment, load the NVidia HPC Software Development Kit and CUDA with:
 
 ~~~
 module load StdEnv/2020
-module load nvhpc
+module load nvhpc cuda
 ~~~
 {: .bash}
 
@@ -26,5 +26,6 @@ You should have access to the compiler and tools now. Test this with:
 ~~~
 which nvcc
 which nvprof
+which nvvp
 ~~~
 {: .bash}
