@@ -21,12 +21,16 @@ block.  In the Adding Vectors example we just finished, we created threads with
 `<<<1,N>>>`. Now we will use the first parameter to create blocks instead.
 
 What's a block? A GPU typically has several _streaming multiprocessors_
-(SMs). A block is handled by one SM, though each SM may handle many blocks in
-succession.  And each SM supports up to 1024 threads, typically in multiples of 32.
-See the 
+(SMs). A block is handled by one SM, and each SM may handle many blocks in
+succession.  Each SM supports up to 1024 threads, typically in multiples of 32
+called "warps".  Threads can quickly access and share the data within a block.
+The pictures below from
 <a href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html">CUDA
-C Programming Guide</a> for pictures (Figures 3,4).  Threads can quickly access
-and share the data within a block.
+C Programming Guide</a> should help:
+
+| Blocks and SMs | Thread Blocks |
+:---:|:---:
+| ![](../fig/cuda_blocks.png)| ![](../fig/cuda_thread_blocks.png)|
 
 The P100 GPU model available at 
 <a href="https://docs.computecanada.ca/wiki/Graham">Graham</a>
