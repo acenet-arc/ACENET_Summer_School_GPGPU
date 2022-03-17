@@ -220,3 +220,8 @@ Compute Canada:
 * <https://www.openacc.org/get-started> (videos)
 * <https://docs.computecanada.ca/wiki/OpenACC_Tutorial> (text)
 
+If you're using GPUs, then performance obviously matters to you.
+A lot.  Here's a great blog post that summarizes the most important
+performance issues around GPUs.  It's from a perspective of Deep Learning,
+but the thoughts are quite general:
+* <https://horace.io/brrr_intro.html> 
