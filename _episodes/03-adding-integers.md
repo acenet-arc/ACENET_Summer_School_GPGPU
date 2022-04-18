@@ -32,7 +32,7 @@ __global__ void add(int *da, int *db, int *dc) {
    *dc = *da + *db;
 }
 ~~~
-{: .source}
+{: .language-c }
 
 Those asterisks may be unfamiliar to you if you haven't done much C 
 programming. They mean that the parameters being supplied are not the 
@@ -56,7 +56,7 @@ of a few variables.  The C operator to do that is the ampersand, `&`.
 > ~~~
 > int a;
 > ~~~
-> {: .source}
+> {: .language-c }
 > ...declares an integer `a` and the space to hold it.
 > 
 > The second way is to allocate it *dynamically* and keep a *pointer* to that area of memory.
@@ -64,7 +64,7 @@ of a few variables.  The C operator to do that is the ampersand, `&`.
 > int *a;
 > a = (int *)malloc(sizeof(int));
 > ~~~
-> {: .source}
+> {: .language-c }
 > ...declares a *pointer to an integer*, and then `malloc` finds space to put it
 > and we put the `address` of that space into `a`.
 > This is what is almost always done for data arrays, since it allows you
@@ -75,7 +75,7 @@ of a few variables.  The C operator to do that is the ampersand, `&`.
 > ~~~
 > free(a);
 > ~~~
-> {: .source}
+> {: .language-c }
 {: .callout}
 
 There are CUDA variants for `malloc` and `free` that handle allocation of
@@ -86,7 +86,7 @@ looks like the following:
 int *d_a;
 cudaMalloc((void **)&d_a, sizeof(int));
 ~~~
-{: .source}
+{: .language-c }
 
 You then need to copy data from the CPU memory to the GPU memory with 
 another function from the CUDA library. This looks like:
@@ -94,7 +94,7 @@ another function from the CUDA library. This looks like:
 ~~~
 cudaMemcpy(d_a, &a, sizeof(int), cudaMemcpyHostToDevice);
 ~~~
-{: .source}
+{: .language-c }
 
 The order of arguments here is 
  * destination address,
@@ -151,7 +151,7 @@ Here's web documentation for:
 >    // ... manage memory ...
 > }
 > ~~~
-> {: .source}
+> {: .language-c }
 >
 > {: .callout}
 >
@@ -180,12 +180,12 @@ Here's web documentation for:
 > >   cudaFree(da); cudaFree(db); cudaFree(dc);
 > > }
 > > ~~~
-> > {: .source}
+> > {: .language-c }
 > > 
 > > Compile with `nvcc add.cu -o add`, test with `srun --gres=gpu:1 add 1 2`
 > > 
-> {: .solution}
-{: .challenge}
+> {: .solution }
+{: .challenge }
 
 Oh, and one more thing: We should add `cudaDeviceSynchronize()` just before we
 copy back the result. The CPU code is not *required* to wait for the GPU code to

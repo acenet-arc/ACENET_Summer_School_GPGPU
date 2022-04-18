@@ -22,14 +22,14 @@ int main(int argc, char **argv) {
    printf("Hello World\n");
 }
 ~~~
-{: .source}
+{: .language-c }
 
 The CUDA compiler is a C compiler that can generate binary code that will run on CPUs as well as code that will run on GPUs. The compiler is called `nvcc`. Use it to compile this Hello World with the following command:
 
 ~~~
 nvcc -o hello_world hello_world.c
 ~~~
-{: .bash}
+{: .language-bash }
 
 > ## Command not found?
 > If you get:
@@ -37,14 +37,14 @@ nvcc -o hello_world hello_world.c
 > ~~~
 > $ nvcc -o hello_world hello_world.c
 > ~~~
-> {: .language-bash}
+> {: .language-bash }
 > ~~~
 > -bash: nvcc: command not found
 > ~~~
-> {: .output}
+> {: .output }
 >
 > ...you may have forgotten to run `module load nvhpc`.
-{: .callout}
+{: .callout }
 
 To get this to run with a GPU, you need to add some code to create and launch a **kernel**. A kernel is a portion of code that can be transfered to the GPU and run there. A simple example would look like the following.
 
@@ -60,7 +60,7 @@ int main(int argc, char **argv) {
    printf("Hello world\n");
 }
 ~~~
-{: .source}
+{: .language-c }
 
 You can compile this code with the same command as before, **except the file extension must be '.cu' instead of '.c'**. We added two extra parts to the program. The first part, \_\_global\_\_, tells the compiler that this function will be something that runs on the GPU, but is called from the main program. The second part is the use of angle brackets added to the function call. This is extra syntax used to tell the compiler that this function is to be used as a kernel and to launch it on the GPU. In this case, our kernel function doesn't do anything. We will add more to it in the next section.
 
@@ -81,7 +81,7 @@ You could execute `hello_world` on the login node simply by naming it:
 $ ./hello_world
 Hello World
 ~~~
-{: .source}
+{: .language-bash }
 
 But the login nodes on the cluster we're using don't have GPUs, so how does
 that work?  You could run it on a GPU node using 
@@ -90,7 +90,7 @@ that work?  You could run it on a GPU node using
 $ srun --gres=gpu:1 hello_world
 Hello World
 ~~~
-{: .source}
+{: .language-bash }
 
 as shown in the previous episode, but the result will be the same because this code
 doesn't actually do anything with the GPU yet.  Let's fix that next.

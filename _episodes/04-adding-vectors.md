@@ -26,7 +26,7 @@ int *a;
 int bytes = N * sizeof(int);
 a = (int *)malloc(bytes); 
 ~~~
-{: .source}
+{: .language-c }
 
 Because of the relation between pointers and arrays in C, we can store and
 retrieve data from an allocated block of memory using array syntax,
@@ -48,7 +48,7 @@ __global__ void add(int *da, int *db, int *dc) {
    dc[threadIdx.x] = da[threadIdx.x] + db[threadIdx.x];
 }
 ~~~
-{: .source}
+{: .language-c }
 
 Notice that this kernel function just adds *one* pair of integers and stores
 them in one matching location in array `dc`.  But because we've used the
@@ -108,13 +108,13 @@ when we call the kernel.
 > >    free(a); free(b); free(c);
 > > }
 > > ~~~
-> > {: .source}
+> > {: .language-c }
 > > 
 > > Don't forget: To get to a GPU you may need to do something like
 > > `srun --gres=gpu:1 addvec 1 2 512`.
 > >
-> {: .solution}
-{: .challenge}
+> {: .solution }
+{: .challenge }
 
 
 > ## Bonus exercise: (Move fast and) Break things
@@ -124,6 +124,4 @@ when we call the kernel.
 >
 > For even more fun, vary the number of threads.
 >
-{: .challenge}
-
-
+{: .challenge }

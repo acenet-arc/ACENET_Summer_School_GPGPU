@@ -26,8 +26,8 @@ is especially well-suited to address problems that can be expressed as
 data-parallel computations - the same program is executed on many data elements
 in parallel - with high arithmetic intensity - the ratio of arithmetic
 operations to memory operations." 
-(<a href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html">CUDA
-C Programming Guide</a>)
+([CUDA
+C Programming Guide](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html))
 
 ## What is CUDA?
 
@@ -54,7 +54,7 @@ There are also tools for profiling and debugging CUDA code.
 ~~~
 nvidia-smi
 ~~~
-{: .bash}
+{: .language-bash }
 
 ## Running on a GPU node
 
@@ -76,7 +76,7 @@ $ cat testjob
 nvidia-smi
 $ sbatch testjob
 ~~~
-{: .source}
+{: .language-bash }
 
 That asks for one GPU card and 10 CPU cores.  This would be perfect for the national
 [Béluga](https://docs.alliancecan.ca/wiki/B%C3%A9luga/en) cluster, 
@@ -109,4 +109,4 @@ Fri Jun 19 14:40:32 2020
 |  No running processes found                                                 |
 +-----------------------------------------------------------------------------+
 ~~~~
-{: .bash}
+{: .language-bash }
