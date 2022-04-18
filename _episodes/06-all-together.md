@@ -48,7 +48,7 @@ __global__ void add(int n, int *a, int *b, int *c) {
       c[i] = a[i] + b[i];
 }
 ~~~
-{: .source}
+{: .language-c }
 
 Now the size of dataset (i.e. the length of the vectors) we can handle
 correctly no longer depends on the number of blocks and threads.
@@ -156,7 +156,7 @@ much difference various choices make.
 > >    free(a); free(b); free(c);
 > > }
 > > ~~~
-> > {: .source}
+> > {: .language-c }
 > >
 > > Compile it and invoke it like this:
 > >
@@ -164,7 +164,7 @@ much difference various choices make.
 > > $ nvcc addvec_final.cu -o final
 > > $ srun --gres=gpu:1 final 2 2 10000 256 80
 > > ~~~
-> > {: .bash}
+> > {: .language-bash }
 > > 
 > > Remember, you can also use `salloc` in place of `srun` to get a shell
 > > prompt on a GPU node so you can more easily run multiple trials, and using
@@ -186,7 +186,7 @@ __global__ void add(int *a, int *b, int *c) {
    c[threadIdx.x] = a[threadIdx.x] + b[threadIdx.x];
 }
 ~~~
-{: .source}
+{: .language-c }
 
 You can also synchronize the execution of code by setting barriers to get
 threads to reach common points in the problem. Let's say that you are evolving
@@ -198,7 +198,7 @@ the next step. This is where synchronization comes into play.
 __syncthreads();
 # Go on to do the next time step
 ~~~
-{: .source}
+{: .language-c }
 
 This helps avoid problems like race conditions, where incorrect data is being
 used in your calculation.  GPU programming is basically a type of 

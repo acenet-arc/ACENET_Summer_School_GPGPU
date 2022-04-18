@@ -55,7 +55,7 @@ __global__ void add(int *a, int *b, int *c) {
    c[blockIdx.x] = a[blockIdx.x] + b[blockIdx.x];
 }
 ~~~
-{: .source}
+{: .language-c }
 
 > ## Exercise: Change threads to blocks
 > Copy the Adding Vectors example you just finished, and change the copy to use blocks instead of threads.
@@ -99,9 +99,9 @@ __global__ void add(int *a, int *b, int *c) {
 > >    free(a); free(b); free(c);
 > > }
 > > ~~~
-> > {: .source}
-> {: .solution}
-{: .challenge}
+> > {: .language-c }
+> {: .solution }
+{: .challenge }
 
 ## Measuring speed
 
@@ -134,7 +134,7 @@ $ nvprof ./addvec_blocks 1 2 512
                     0.00%     651ns         2     325ns     189ns     462ns  cuDeviceGet
                     0.00%     204ns         1     204ns     204ns     204ns  cuDeviceGetUuid
 ~~~~
-{: .bash}
+{: .language-bash }
 
 This tells us the GPU spent 3.1040 microseconds in our `add()` kernel,
 but spent slightly longer (3.1360us) just copying the data from the
@@ -165,4 +165,4 @@ artificial, you can still use `nvprof` to answer some interesting questions, lik
 > 
 > What happens if you vary the size of the array?
 > Make sure you still get correct answers!
-{: .challenge}
+{: .challenge }
