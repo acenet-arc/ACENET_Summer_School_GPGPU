@@ -25,8 +25,7 @@ What's a block? A GPU typically has several _streaming multiprocessors_
 succession.  Each SM supports up to 1024 threads, typically in multiples of 32
 called "warps".  Threads can quickly access and share the data within a block.
 The pictures below from
-<a href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html">CUDA
-C Programming Guide</a> should help:
+[CUDA C Programming Guide](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html) should help:
 
 | Blocks and SMs | Thread Blocks |
 :---:|:---:
@@ -40,13 +39,13 @@ threads. So if you are doing double-precision calculations, each GPU has
 effectively 56*32 = 1792 cores.
 At [Béluga](https://docs.alliancecan.ca/wiki/B%C3%A9luga/en)
 there are newer
-<a href="https://videocardz.com/69378/nvidia-announces-tesla-v100-with-5120-cuda-cores">V100 GPUs</a>
+[V100 GPUs](https://videocardz.com/69378/nvidia-announces-tesla-v100-with-5120-cuda-cores)
 with 80 SMs, which again support 64 single-precision or 32
 double-precision threads each, for 2560 effective cores.
 
 But to take advantage of all these "CUDA cores" you need to use both blocks and threads.
 
-We'll start by doing something a little sillly, and just switch from threads to
+We'll start by doing something a little silly, and just switch from threads to
 blocks. Change the kernel function to use CUDA's block index,
 `blockIdx.x`, like so:
 
