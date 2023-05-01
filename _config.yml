@@ -2,16 +2,43 @@
 # Values for this lesson.
 #------------------------------------------------------------
 
-# Which carpentry is this ("swc", "dc", or "lc")?
-carpentry: "swc"
+# Which carpentry is this ("swc", "dc", "lc", or "cp")?
+# swc: Software Carpentry
+# dc: Data Carpentry
+# lc: Library Carpentry
+# cp: Carpentries (to use for instructor traning for instance)
+# incubator: Carpentries Incubator
+#
+# an: ACENET
+# cc: Compute Canada
+# alliance: Digital Research Alliance of Canada
+# molmodsim: Compute Canada Molecular Simulation Team 
+# bst: (compatibility) same as `molmodsim`
+carpentry: "an"
 
 # Overall title for pages.
 title: "ACENET Summer School - GPGPU"
 
-# Contact.  This *must* include the protocol: if it's an email
-# address, it must look like "mailto:lessons@software-carpentry.org",
-# or if it's a URL, "https://gitter.im/username/ProjectName".
-contact: "mailto:ross.dickson@ace-net.ca"
+# Life cycle stage of the lesson
+# See this page for more details: https://cdh.carpentries.org/the-lesson-life-cycle.html
+# Possible values: "pre-alpha", "alpha", "beta", "stable"
+#
+# Lessons that are going through the transition to the
+# Carpentries Workbench will go through 3 steps:
+# 'transition-step-1': notice indicating a new version
+# 'transition-step-2': notice encouraging to use new version
+# 'transition-step-3': notice indicating the lesson is deprecated,
+#                      with automated redirect
+life_cycle: "stable"
+
+# For lessons in the life stages in 'transition-step-1' or later:
+# - 'transition_url' holds the URL for the version of the lesson that
+#    uses the Workbench (needed for all 3 steps)
+# - 'transition_date' (in yyyy-mm-dd format) is the date when the lesson
+#    will transition to being deprecated. The date only needs to be decided
+#    when the lesson is in 'transition-step-2'.
+transition_url:
+transition_date:
 
 #------------------------------------------------------------
 # Generic settings (should not need to change).
@@ -22,21 +49,37 @@ kind: "lesson"
 
 # Magic to make URLs resolve both locally and on GitHub.
 # See https://help.github.com/articles/repository-metadata-on-github-pages/.
-repository: acenet-arc/ACENET_Summer_School_GPGPU
+# Please don't change it: <USERNAME>/<PROJECT> is correct.
+repository: <USERNAME>/<PROJECT>
+
+# Email address, no mailto:
+email: "support@ace-net.ca"
 
 # Sites.
-amy_site: "https://amy.software-carpentry.org/workshops"
-dc_site: "http://datacarpentry.org"
+coc: "https://docs.carpentries.org/topic_folders/policies/code-of-conduct.html"
+amy_site: "https://amy.carpentries.org/"
+carpentries_github: "https://github.com/carpentries"
+carpentries_pages: "https://carpentries.github.io"
+carpentries_site: "https://carpentries.org/"
+dc_site: "https://datacarpentry.org"
+example_repo: "https://github.com/carpentries/lesson-example"
+example_site: "https://carpentries.github.io/lesson-example"
+lc_site: "https://librarycarpentry.org/"
 swc_github: "https://github.com/swcarpentry"
-swc_site: "https://software-carpentry.org"
 swc_pages: "https://swcarpentry.github.io"
-lc_site: "http://librarycarpentry.github.io/"
-template_repo: "https://github.com/swcarpentry/styles"
-example_repo: "https://github.com/swcarpentry/lesson-example"
-example_site: "https://swcarpentry.github.com/lesson-example"
-workshop_repo: "https://github.com/swcarpentry/workshop-template"
-workshop_site: "https://swcarpentry.github.io/workshop-template"
-training_site: "https://swcarpentry.github.io/instructor-training"
+swc_site: "https://software-carpentry.org"
+template_repo: "https://github.com/carpentries/styles"
+training_site: "https://carpentries.github.io/instructor-training"
+workshop_repo: "https://github.com/carpentries/workshop-template"
+workshop_site: "https://carpentries.github.io/workshop-template"
+cc_by_human: "https://creativecommons.org/licenses/by/4.0/"
+
+# Alliance/Compute Canada customizations
+an_site: "https://www.ace-net.ca"
+bst_site: "https://docs.computecanada.ca/wiki/Biomolecular_simulation"
+cc_site: "https://www.computecanada.ca"
+alliance_site: "https://alliancecan.ca"
+cc_style_repo: "https://github.com/acenet-arc/cc-carpentries-styles"
 
 # Surveys.
 pre_survey: "https://www.surveymonkey.com/r/swc_pre_workshop_v1?workshop_id="
@@ -57,17 +100,29 @@ collections:
 # Set the default layout for things in the episodes collection.
 defaults:
   - values:
-      root: ..
+      root: .
+      layout: page
   - scope:
       path: ""
       type: episodes
     values:
+      root: ..
       layout: episode
+  - scope:
+      path: ""
+      type: extras
+    values:
+      root: ..
+      layout: page
 
 # Files and directories that are not to be copied.
 exclude:
   - Makefile
-  - bin
+  - bin/
+  - .Rproj.user/
+  - .vendor/
+  - vendor/
+  - .docker-vendor/
 
-# Turn off built-in syntax highlighting.
-highlighter: false
+# Turn on built-in syntax highlighting.
+highlighter: rouge
