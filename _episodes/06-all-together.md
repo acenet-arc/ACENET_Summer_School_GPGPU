@@ -4,7 +4,7 @@ teaching: 10
 exercises: 20
 questions:
 - "How do blocks and threads work together?"
-- "What other GPU programming resoures are there?"
+- "What other GPU programming resources are there?"
 objectives:
 - "To show how blocks and threads typically work together"
 keypoints:
@@ -15,8 +15,7 @@ To take advantage of all these "CUDA cores" you need to use both blocks and thre
 
 The family of CUDA variables defining blocks and threads can be explained 
 by referring to this image from 
-<a href="https://developer.nvidia.com/blog/even-easier-introduction-cuda/">
-"An Even Easier Introduction to CUDA"</a>:
+["An Even Easier Introduction to CUDA"](https://developer.nvidia.com/blog/even-easier-introduction-cuda/):
 
 ![CUDA indexing](../fig/cuda_indexing.png)
 
@@ -32,7 +31,7 @@ If you're wondering about the `.x` on all of these, it's there because
 you have the option of specifying 2- or 3-dimensional arrays of blocks, and
 threads within blocks, for natural indexing of 2- and 3-dimensional data
 structures likes matrices or volumes.  See the 
-<a href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html">CUDA Programming Guide</a>
+[CUDA Programming Guide](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html)
 if you want to learn more about this.
 
 We'll change our kernel function one more time, to escape the limitation of the

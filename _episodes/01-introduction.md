@@ -33,9 +33,9 @@ C Programming Guide</a>)
 
 There are a number of packages you can use to program GPUs. 
 Three prominent ones are 
-<a href="https://developer.nvidia.com/cuda-zone">CUDA</a>,
-<a href="https://www.khronos.org/opencl/">OpenCL</a>, and 
-<a href="https://www.openacc.org/">OpenACC</a>.
+[CUDA](https://developer.nvidia.com/cuda-zone),
+[OpenCL](https://www.khronos.org/opencl/), and 
+[OpenACC](https://www.openacc.org/).
 
 CUDA is an NVidia product. It once stood for Compute Unified Device
 Architecture, but not even NVidia uses that expansion any more. CUDA has two

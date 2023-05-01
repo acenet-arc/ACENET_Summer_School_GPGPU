@@ -1,0 +1,13 @@
+Béluga
+cpus
+CUDA
+gres
+Narval
+nvcc
+nvhpc
+nvprof
+salloc
+sbatch
+Slurm
+srun
+testjob
