@@ -33,12 +33,12 @@ C Programming Guide</a> should help:
 | ![](../fig/cuda_blocks.png)| ![](../fig/cuda_thread_blocks.png)|
 
 The P100 GPU model available at 
-<a href="https://docs.computecanada.ca/wiki/Graham">Graham</a>
-and <a href="https://docs.computecanada.ca/wiki/Cedar">Cedar</a>
+[Graham](https://docs.alliancecan.ca/wiki/Graham)
+[Cedar](https://docs.alliancecan.ca/wiki/Cedar)
 has 56 SMs, each supporting 64 single-precision threads or 32 double-precision
 threads. So if you are doing double-precision calculations, each GPU has
 effectively 56*32 = 1792 cores.
-At <a href="https://docs.computecanada.ca/wiki/B%C3%A9luga/en">Béluga</a>
+At [Béluga](https://docs.alliancecan.ca/wiki/B%C3%A9luga/en)
 there are newer
 <a href="https://videocardz.com/69378/nvidia-announces-tesla-v100-with-5120-cuda-cores">V100 GPUs</a>
 with 80 SMs, which again support 64 single-precision or 32

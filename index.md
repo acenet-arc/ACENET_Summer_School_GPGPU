@@ -6,7 +6,7 @@ This workshop presents an introduction to using CUDA to harness the power of an 
 
 > ## Prerequisites
 >
-> - A Compute Canada account
+> - An [Alliance](https://alliancecan.ca/en/services/advanced-research-computing/account-management/apply-account) account
 > - Basic C knowledge
 > - Basic Linux command line competence
 {: .prereq}

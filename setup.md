@@ -4,7 +4,7 @@ title: Setup
 permalink: /setup/
 ---
 
-This lesson will work best if done on a real cluster, like Compute Canada's Béluga, Cedar, or Graham.
+This lesson will work best if done on a real cluster, like Alliance's Béluga, Cedar, Graham or Narval.
 If you haven't got an account on those, our virtual training cluster will also be fine
 although some of the profiling exercises might not work as described.
 

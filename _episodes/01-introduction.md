@@ -11,7 +11,7 @@ objectives:
 keypoints:
 - "A GPU (Graphics Processing Unit) is best at data-parallel, arithmetic-intense calculations"
 - "CUDA is one of several programming interfaces for general-purpose computing on GPUs"
-- "Compute Canada clusters have special GPU-equipped nodes, which must be requested from the scheduler"
+- "Alliance clusters have special GPU-equipped nodes, which must be requested from the scheduler"
 ---
 
 ## What is a GPU, and why?
@@ -63,7 +63,7 @@ it can't communicate with the NVIDIA driver. This should be no surprise: No NVID
 needs to be running on a node that has no GPU.
 
 To get access to a GPU we have to go through 
-<a href="https://docs.computecanada.ca/wiki/Running_jobs#Interactive_jobs">Slurm</a>.
+[Slurm](https://docs.alliancecan.ca/wiki/Running_jobs#Interactive_jobs).
 The "normal" way is to use `sbatch`, which will queue up a job for execution later:
 
 ~~~
@@ -79,7 +79,7 @@ $ sbatch testjob
 {: .source}
 
 That asks for one GPU card and 10 CPU cores.  This would be perfect for the national
-<a href="https://docs.computecanada.ca/wiki/B%C3%A9luga/en">Béluga</a> cluster, 
+[Béluga](https://docs.alliancecan.ca/wiki/B%C3%A9luga/en) cluster, 
 since the GPU nodes there have 4 GPUs, 40 CPU cores, and more than 160GB of RAM.  
 Five minutes of run time is foolishly short for a production job, but we're testing, 
 so this should be okay.

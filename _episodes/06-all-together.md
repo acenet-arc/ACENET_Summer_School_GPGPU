@@ -216,9 +216,9 @@ Here are two shorter tutorials, from NVidia:
 
 As mentioned in episode 1, there are other ways to program GPUs
 than CUDA. Here are two OpenACC tutorials, including one from
-Compute Canada:
+the Alliance:
 * <https://www.openacc.org/get-started> (videos)
-* <https://docs.computecanada.ca/wiki/OpenACC_Tutorial> (text)
+* <https://docs.alliancecan.ca/wiki/OpenACC_Tutorial> (text)
 
 If you're using GPUs, then performance obviously matters to you.
 A lot.  Here's a great blog post that summarizes the most important
