@@ -100,7 +100,7 @@ collections:
 # Set the default layout for things in the episodes collection.
 defaults:
   - values:
-      root: .
+      root: ..
       layout: page
   - scope:
       path: ""
