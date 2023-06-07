@@ -9,7 +9,7 @@ If you haven't got an account on those, our virtual training cluster will also b
 although some of the profiling exercises might not work as described.
 
 ~~~
-ssh userXX@pcs2.ace-net.training
+ssh userXX@pcs2023-3.ace-net.training
 ~~~
 {: .bash}
 
