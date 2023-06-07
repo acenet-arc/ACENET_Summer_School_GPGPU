@@ -194,4 +194,20 @@ one of those errors that will probably not occur until long after you've
 stopped expecting it, and then when it does, you'll have no clue what's going
 on.
 
+> ## Result is zero?
+> If you get:
+>
+> ~~~
+> $ srun --gres=gpu:1 ./add 1 2
+> ~~~
+> {: .language-bash }
+> ~~~
+> 1 + 2 -> 0
+> ~~~
+> {: .output }
+>
+> ...you may have forgotten to load the CUDA module `module load cuda/11.4`.
+{: .callout }
+
+
 We still haven't done anything in parallel. That's next.

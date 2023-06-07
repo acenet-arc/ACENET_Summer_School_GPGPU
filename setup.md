@@ -17,7 +17,7 @@ To set up your environment, load the NVidia HPC Software Development Kit and CUD
 
 ~~~
 module load StdEnv/2020
-module load nvhpc/20.7
+module load nvhpc/22.7 cuda/11.4
 ~~~
 {: .bash}
 
