@@ -17,7 +17,14 @@ The family of CUDA variables defining blocks and threads can be explained
 by referring to this image from 
 ["An Even Easier Introduction to CUDA"](https://developer.nvidia.com/blog/even-easier-introduction-cuda/):
 
-![CUDA indexing](../fig/cuda_indexing.png)
+~~~
+int blockSize = 256;
+int numBlocks = (N + blockSize - 1) / blockSize;
+add<<<numBlocks, blockSize>>>(N, x, y);
+~~~
+{: .language-c }
+
+![CUDA indexing](../fig/cuda_indexing_v2.svg){: width="700px"}
 
 The number of blocks is in `gridDim.x`--- we've been calling that `numBlocks`
 in our CPU-side code---  and the number of threads in a block is `blockDim.x`
@@ -205,6 +212,7 @@ shared-memory programming, so the same problems and cautions we saw with
 OpenMP apply here.
 
 ## Where to go next
+FIXME: move to the end
 
 This has been the barest of introductions to CUDA and GPU programming.
 Don't forget the CUDA Programming Guide we mentioned earlier:
