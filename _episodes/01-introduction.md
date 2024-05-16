@@ -1,6 +1,6 @@
 ---
 title: "Introduction"
-teaching: 10
+teaching: 15
 exercises: 5
 questions:
 - "What is a GPU, and why do we use them?"
@@ -21,13 +21,30 @@ designed to accelerate the creation of images.  GPUs are key to the performance
 of many current computer games; a machine with only CPUs cannot update the
 picture on the screen fast enough to make the game playable.
 
-A GPU is effectively a small, highly specialized, parallel computer.  "The GPU
-is especially well-suited to address problems that can be expressed as
-data-parallel computations - the same program is executed on many data elements
-in parallel - with high arithmetic intensity - the ratio of arithmetic
-operations to memory operations." 
-([CUDA
-C Programming Guide](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html))
+### Difference between CPUs and GPUs
+![Diagram CPUs vs GPUs](../fig/CPU_vs_GPU.svg){: width="600" }
+
+| CPUs                                             | GPUs                              |
+| ------------------------------------------------ | --------------------------------- |
+| extremely versatile ("Jack of all trades")       | excel at number-crunching         |
+| task parallelism for diverse tasks               | data parallelism (single task)    |
+| minimize latency                                 | maximize throughput               |
+| multithreaded                                    | super-threaded                    |
+| limited SIMD (Single Instruction Multiple Data)  | large-scale SIMD                  |
+{: width="600" }
+
+
+### In Summary
+
+A GPU is effectively a small, highly specialized, parallel computer.
+
+> The GPU is especially well-suited to address problems that can be expressed as
+> data-parallel computations - the same program is executed on many data elements
+> in parallel - with high arithmetic intensity - the ratio of arithmetic
+> operations to memory operations.
+{: .quote}
+([CUDA C Programming Guide](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html))
+
 
 ## What is CUDA?
 
