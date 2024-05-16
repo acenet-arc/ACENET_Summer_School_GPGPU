@@ -24,13 +24,13 @@ picture on the screen fast enough to make the game playable.
 ### Difference between CPUs and GPUs
 ![Diagram CPUs vs GPUs](../fig/CPU_vs_GPU.svg){: width="600" }
 
-| CPUs                                             | GPUs                              |
-| ------------------------------------------------ | --------------------------------- |
-| extremely versatile ("Jack of all trades")       | excel at number-crunching         |
-| task parallelism for diverse tasks               | data parallelism (single task)    |
-| minimize latency                                 | maximize throughput               |
-| multithreaded                                    | super-threaded                    |
-| limited SIMD (Single Instruction Multiple Data)  | large-scale SIMD                  |
+| CPUs                                             | GPUs                                       |
+| ------------------------------------------------ | ------------------------------------------ |
+| extremely versatile ("Jack of all trades")       | excel at number-crunching                  |
+| task parallelism for diverse tasks               | data parallelism (single task)             |
+| minimize latency                                 | maximize throughput                        |
+| multithreaded                                    | super-threaded                             |
+| SIMD (Single Instruction Multiple Data)          | SIMT (Single-Instruction, Multiple-Thread) |
 {: width="600" }
 
 

@@ -12,5 +12,6 @@
             "addWords": true,
             "scope": "folder"
         }
-    }
+    },
+    "cSpell.language": "en-CA"
 }
