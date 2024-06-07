@@ -1,7 +1,7 @@
 ---
 title: "Adding Two Integers"
 teaching: 10
-exercises: 20
+exercises: 15
 questions:
 - "How does GPU memory work?"
 objectives:

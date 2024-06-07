@@ -12,6 +12,7 @@ keypoints:
 - "A GPU (Graphics Processing Unit) is best at data-parallel, arithmetic-intense calculations"
 - "CUDA is one of several programming interfaces for general-purpose computing on GPUs"
 - "Alliance clusters have special GPU-equipped nodes, which must be requested from the scheduler"
+start: True
 ---
 
 ## What is a GPU, and why?

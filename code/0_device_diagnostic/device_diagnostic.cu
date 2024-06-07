@@ -6,6 +6,7 @@ nvcc device_diagnostic.cu  -o device_diagnostic
 */
 
 #include <cstdio>
+#include <stdlib.h>
 
 int main( void ) {
     cudaDeviceProp  prop;
