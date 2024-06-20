@@ -134,7 +134,7 @@ Here's web documentation for:
 > 
 > int main(int argc, char **argv) {
 >    int a, b, c;        // We've chosen static allocation here for host storage..
->    int *da, *db, *dc;  // ...but device storage must be dynamically allocated
+>    int *d_a, *d_b, *d_c;  // ...but device storage must be dynamically allocated
 >    a = atoi(argv[1]);  // Read the addends from the command line args
 >    b = atoi(argv[2]);
 > 
@@ -142,7 +142,7 @@ Here's web documentation for:
 > 
 >    // ... move data ...
 > 
->    add<<<1,1>>>(da, db, dc); // call kernel function on GPU
+>    add<<<1,1>>>(d_a, d_b, d_c); // call kernel function on GPU
 > 
 >    // ... move data ...
 > 
@@ -166,18 +166,18 @@ Here's web documentation for:
 > > 
 > > int main(int argc, char **argv) {
 > >   int a, b, c;        // We've chosen static allocation here for host storage..
-> >   int *da, *db, *dc;  // ...but device storage must be dynamically allocated
+> >   int *d_a, *d_b, *d_c;  // ...but device storage must be dynamically allocated
 > >   a = atoi(argv[1]);  // Read the addends from the command line args
 > >   b = atoi(argv[2]);
-> >   cudaMalloc((void **)&da, sizeof(int));
-> >   cudaMalloc((void **)&db, sizeof(int));
-> >   cudaMalloc((void **)&dc, sizeof(int));
-> >   cudaMemcpy(da, &a, sizeof(int), cudaMemcpyHostToDevice);
-> >   cudaMemcpy(db, &b, sizeof(int), cudaMemcpyHostToDevice);
-> >   add<<<1,1>>>(da, db, dc);
-> >   cudaMemcpy(&c, dc, sizeof(int), cudaMemcpyDeviceToHost);
+> >   cudaMalloc((void **)&d_a, sizeof(int));
+> >   cudaMalloc((void **)&d_b, sizeof(int));
+> >   cudaMalloc((void **)&d_c, sizeof(int));
+> >   cudaMemcpy(d_a, &a, sizeof(int), cudaMemcpyHostToDevice);
+> >   cudaMemcpy(d_b, &b, sizeof(int), cudaMemcpyHostToDevice);
+> >   add<<<1,1>>>(d_a, d_b, d_c);
+> >   cudaMemcpy(&c, d_c, sizeof(int), cudaMemcpyDeviceToHost);
 > >   printf("%d + %d -> %d\n", a, b, c);
-> >   cudaFree(da); cudaFree(db); cudaFree(dc);
+> >   cudaFree(d_a); cudaFree(d_b); cudaFree(d_c);
 > > }
 > > ~~~
 > > {: .language-c }
