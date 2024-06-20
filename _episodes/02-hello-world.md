@@ -43,7 +43,7 @@ nvcc -o hello_world hello_world.c
 > ~~~
 > {: .output }
 >
-> ...you may have forgotten to run `module load nvhpc/22.7 cuda/11.4`.
+> ...you may have forgotten to run `module load StdEnv/2020 gcc/9.3.0 cuda/11.4`.
 {: .callout }
 
 To get this to run with a GPU, you need to add some code to create and launch a **kernel**. A kernel is a portion of code that can be transferred to the GPU and run there. A simple example would look like the following.
