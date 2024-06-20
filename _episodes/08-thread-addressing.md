@@ -8,8 +8,7 @@ objectives:
 - "Use 2D and 3D Grids and Blocks."
 keypoints:
 - "Using 2D or 3D GridDefs and BlockDefs can make it easier to address multi-dimensional data."
-- "FIXME"
-- "FIXME"
+- "CUDA has a special type `dim3` to define multi-dimensional grid and block definitions."
 ---
 
 So far we have used the _grid-stride loop_ to process one-dimensional vector data on the GPU.
