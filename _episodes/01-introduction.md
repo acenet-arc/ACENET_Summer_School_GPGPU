@@ -49,17 +49,27 @@ A GPU is effectively a small, highly specialized, parallel computer.
 
 ## What is CUDA?
 
-There are a number of packages you can use to program GPUs. 
-Three prominent ones are 
-[CUDA](https://developer.nvidia.com/cuda-zone),
-[OpenCL](https://www.khronos.org/opencl/), and 
-[OpenACC](https://www.openacc.org/).
+There are a number of packages you can use to program GPUs.
+Prominent ones are
+[CUDA](https://developer.nvidia.com/cuda-zone) (only for NVIDIA GPUs),
+[OpenCL](https://www.khronos.org/opencl/),
+[OpenACC](https://www.openacc.org/),
+[ROCm](https://www.amd.com/en/products/software/rocm.html)/[HIP](https://github.com/ROCm/HIP) (only for AMD GPUs) and
+[SYCL](https://www.khronos.org/sycl/).
 
-CUDA is an NVidia product. It once stood for Compute Unified Device
-Architecture, but not even NVidia uses that expansion any more. CUDA has two
+CUDA is an NVIDIA product. It once stood for Compute Unified Device
+Architecture, but not even NVIDIA uses that expansion any more. CUDA has two
 components. One part is a driver that actually handles communications with the
 card. The second part is a set of libraries that allow your code to interact
-with the driver portion. CUDA only works with Nvidia graphics cards.
+with the driver portion. CUDA only works with NVIDIA graphics cards.
+
+### Why should I learn CUDA if it doesn't work with AMD GPUs?
+
+In fact the way ROCm/HIP is used to program AMD GPUs is very similar to CUDA and
+CUDA kernels can easily be transformed into HIP kernels.
+
+As of 2024, only NVIDIA GPUs are in use across ACENET's and the Alliance's HPC
+systems.
 
 ## Monitoring your graphics card
 
@@ -109,20 +119,23 @@ yet a third form that you already saw in a previous week, `srun`:
 
 ~~~~
 $ srun --gres=gpu:1  nvidia-smi
-Fri Jun 19 14:40:32 2020
+Thu Jun 20 14:39:56 2024
 +-----------------------------------------------------------------------------+
-| NVIDIA-SMI 440.56       Driver Version: 440.56       CUDA Version: 10.2     |
+| NVIDIA-SMI 470.239.06   Driver Version: 470.239.06   CUDA Version: 11.4     |
 |-------------------------------+----------------------+----------------------+
 | GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
 | Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
 |===============================+======================+======================|
 |   0  GRID V100D-8C       On   | 00000000:00:05.0 Off |                    0 |
 | N/A   N/A    P0    N/A /  N/A |    560MiB /  8192MiB |      0%      Default |
+|                               |                      |                  N/A |
 +-------------------------------+----------------------+----------------------+
-
+                                                                               
 +-----------------------------------------------------------------------------+
-| Processes:                                                       GPU Memory |
-|  GPU       PID   Type   Process name                             Usage      |
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
 |=============================================================================|
 |  No running processes found                                                 |
 +-----------------------------------------------------------------------------+
