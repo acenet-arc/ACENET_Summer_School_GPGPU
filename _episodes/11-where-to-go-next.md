@@ -3,9 +3,12 @@ title: "Where To Go Next?"
 teaching: 5
 exercises: 0
 questions:
+- "What software libraries can I use so that I don't need to write my own kernels?"
 - "Where can I find additional resources?"
 objectives:
 - "Links to additional resources."
+keypoints:
+- "Many software libraries implement highly-optimized solutions for common problems."
 ---
 
 ## Use of optimized libraries
@@ -19,7 +22,7 @@ because teams of programmers have spent countless hours to optimize them.
 | --------------------------------------- | --------- | ---------------------------------------- |
 | BLAS (Basic Linear Algebra Subprograms) | cuBLAS    | <https://docs.nvidia.com/cuda/cublas/>   |
 | Drop-in BLAS  (based on cuBLAS)         | NVBLAS    | <https://docs.nvidia.com/cuda/nvblas/>   |
-| FFT (Fast Fourier Tranform)             | cuFFT     | <https://docs.nvidia.com/cuda/cufft/>    |
+| FFT (Fast Fourier Transform)            | cuFFT     | <https://docs.nvidia.com/cuda/cufft/>    |
 | Sparse matrices                         | cuSPARSE  | <https://docs.nvidia.com/cuda/cusparse/> |
 | Solver for dense and sparse matrices    | cuSOLVER  | <https://docs.nvidia.com/cuda/cusolver/> |
 | LAPACK (Linear Algebra Package)         | MAGMA     | <https://icl.utk.edu/magma/>             |

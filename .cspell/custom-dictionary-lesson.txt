@@ -1,14 +1,17 @@
 addvec
 atoi
 Béluga
+BLAS
 cpus
 CUDA
 gres
+LAPACK
 malloc
 Memcpy
 mykernel
 Narval
 numthreads
+NVBLAS
 nvcc
 nvhpc
 nvprof
