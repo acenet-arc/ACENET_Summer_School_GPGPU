@@ -20,5 +20,6 @@ SIMT
 Slurm
 srun
 stdlib
+strided
 syncthreads
 testjob
