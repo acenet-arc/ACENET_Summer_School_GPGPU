@@ -169,13 +169,16 @@ Here's web documentation for:
 > >   int *d_a, *d_b, *d_c;  // ...but device storage must be dynamically allocated
 > >   a = atoi(argv[1]);  // Read the addends from the command line args
 > >   b = atoi(argv[2]);
+> > 
 > >   cudaMalloc((void **)&d_a, sizeof(int));
 > >   cudaMalloc((void **)&d_b, sizeof(int));
 > >   cudaMalloc((void **)&d_c, sizeof(int));
 > >   cudaMemcpy(d_a, &a, sizeof(int), cudaMemcpyHostToDevice);
 > >   cudaMemcpy(d_b, &b, sizeof(int), cudaMemcpyHostToDevice);
+> > 
 > >   add<<<1,1>>>(d_a, d_b, d_c);
 > >   cudaMemcpy(&c, d_c, sizeof(int), cudaMemcpyDeviceToHost);
+> > 
 > >   printf("%d + %d -> %d\n", a, b, c);
 > >   cudaFree(d_a); cudaFree(d_b); cudaFree(d_c);
 > > }

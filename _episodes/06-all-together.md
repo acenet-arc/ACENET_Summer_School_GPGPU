@@ -154,7 +154,7 @@ much difference various choices make.
 > >    for (int i=0; i<N; ++i) {
 > >       if (c[i] != expected) {
 > >          printf("Wrong sum %d at element %d!\n", c[i], i);
-> > 	 break;
+> >          break;
 > >       }
 > >    }
 > > 
