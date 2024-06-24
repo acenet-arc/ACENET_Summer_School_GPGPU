@@ -13,7 +13,7 @@ keypoints:
 In the first session of the ACENET Summer School we have been introduced to the 
 [Julia set](https://acenet-arc.github.io/ACENET_Summer_School_General/05-performance/index.html#example-generating-an-image-of-a-julia-set) as an example to demonstrate weak and strong scaling.
 
-At `https://acenet-arc.github.io/ACENET_Summer_School_GPGPU/code/2_julia/julia_cpu.cu` we have implementation of the Julia set for calculation on CPUs.
+At `https://acenet-arc.github.io/ACENET_Summer_School_GPGPU/code/10-exercise-julia-set/julia_cpu.cu` we have implementation of the Julia set for calculation on CPUs.
 
 The goal of this exercise is to adapt this file for computation on CPUs.
 

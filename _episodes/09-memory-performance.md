@@ -39,7 +39,7 @@ locations consecutive memory addresses (or as close as possible).
 
 > ## Exercise: Memory access patterns
 >
-> Is this a a good memory access pattern?
+> Is this a good memory access pattern?
 >
 > ~~~
 > x = blockIdx.x * blockDim.x + threadIDx.x;

@@ -43,7 +43,7 @@ Let's run some device diagnostics on a V100 GPU to print out some of its propert
 > ## Device diagnostic code `device_diagnostic.cu`
 > 
 > This is the code for `device_diagnostic.cu` that can also be downloaded from:
-> https://raw.githubusercontent.com/acenet-arc/ACENET_Summer_School_GPGPU/gh-pages/code/device_diagnostic.cu
+> https://raw.githubusercontent.com/acenet-arc/ACENET_Summer_School_GPGPU/gh-pages/code/07-architecture/device_diagnostic.cu
 >
 > ~~~~
 > /*
@@ -110,7 +110,7 @@ Let's run some device diagnostics on a V100 GPU to print out some of its propert
 $ cd ~/scratch
 $ mkdir diagnostics
 $ cd diagnostics
-$ wget https://raw.githubusercontent.com/acenet-arc/ACENET_Summer_School_GPGPU/gh-pages/code/device_diagnostic.cu
+$ wget https://raw.githubusercontent.com/acenet-arc/ACENET_Summer_School_GPGPU/gh-pages/code/07-architecture/device_diagnostic.cu
 $ nvcc device_diagnostic.cu  -o device_diagnostic
 $ srun --time=5 --gres=gpu:1  ./device_diagnostic
 ~~~~
