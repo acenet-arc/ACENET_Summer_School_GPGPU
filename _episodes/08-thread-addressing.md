@@ -66,8 +66,8 @@ myKernel<<<gridDef2, blockDef2>>>(paramlist);
 {: .language-c }
 
 Like the previous example this will create $$ 10 \cdot 10 = 100 $$ blocks 
-and $$ 16 \cdot 16 = 256 $$ threads per block, but instead of just using the variables:
-`blockDim.x`, `blockIdx.x` and `threadIdx.x` it uses `blockDim.[xy]`, `blockIdx.[xy]` and `threadIdx.[xy]`.
+and $$ 16 \cdot 16 = 256 $$ threads per block, but instead of just using the variables
+`blockDim.x`, `blockIdx.x`, and `threadIdx.x`, it uses `blockDim.x`, `blockDim.y`, `blockIdx.x`, `blockIdx.y`, `threadIdx.x`, and `threadIdx.y`.
 
 In the 2D case, we can now calculate indices `x` and `y` to access datapoints
 in a 2D matrix:
@@ -87,18 +87,18 @@ kernel2<<<gridDef2, blockDef2>>>(paramList);
 ~~~
 {: .language-c }
 
-#### Comparing 1D and 2D Example
+#### Comparing 1D and 2D Examples
 
-| Description      | 1D Addressing Example         | 21D Addressing Example       |
+| Description      | 1D Addressing Example         | 2D Addressing Example       |
 | ---------------- | ----------------------------- | ---------------------------- |
 | Grid Definition  | `dim3 gridDef1(100,1,1);`     | `dim3 gridDef2(10,10,1);`    |
 | Block Definition | `dim3 blockDef1(256,1,1);`    | `dim3 blockDef2(16,16,1);`   |
 | block dimensions | `blockDim.x` ($$ 100 $$)      | `blockDim.x` ($$ 10 $$)      |
 |                  |                               | `blockDim.y` ($$ 10 $$)      |
-| block indices    | `blockIdx.x` ($$ 1...100 $$)  | `blockIdx.x` ($$ 1...10 $$)  |
-|                  |                               | `blockIdx.y` ($$ 1...10 $$)  |
-| thread indices   | `threadIdx.x` ($$ 1...256 $$) | `threadIdx.x` ($$ 1...16 $$) |
-|                  |                               | `threadIdx.y` ($$ 1...16 $$) |
+| block indices    | `blockIdx.x` ($$ 0...99 $$)  | `blockIdx.x` ($$ 0...9 $$)  |
+|                  |                               | `blockIdx.y` ($$ 0...9 $$)  |
+| thread indices   | `threadIdx.x` ($$ 0...255 $$) | `threadIdx.x` ($$ 0...15 $$) |
+|                  |                               | `threadIdx.y` ($$ 0...15 $$) |
 
 
 This can also be extended to a third (z-) Dimension, however we are still limited
