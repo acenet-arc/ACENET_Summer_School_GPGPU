@@ -7,7 +7,7 @@ questions:
 objectives:
 - "Starting from this CPU version of the Julia Set code, port it to using GPUs using CUDA."
 keypoints:
-- "FIXME"
+# - "FIXME"
 ---
 
 In the first session of the ACENET Summer School we have been introduced to the 
@@ -97,3 +97,14 @@ int julia(int x, int y){
 ~~~
 {: .language-c }
 
+>## Exercise: convert this code to run GPUs
+> 1. Convert the function `julia()` to be able to be compiled for GPUs. 
+>    Hint: this requires adding the `__device__` specifier at the beginning of the function declaration.
+> 2. Convert the function `kernel()` into a CUDA kernel by replacing the loops with statements to 
+>    calculate `x` and `y` positions using 2D-grids and -blocks.
+>    * add an if-clause to ensure that `x` and `y` are within the range of `DIM`.
+> 3. Convert the function `main()` to allocate GPU memory, call the GPU-kernel with 2D-grid and -block
+>    and copy the result array back to host-memory before saving it to a file.
+>
+> The solution will be added here on July 3rd, 2024.
+{: .challenge }
